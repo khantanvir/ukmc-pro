@@ -371,11 +371,12 @@
                 iziToast.show({
                     title: 'Hey',
                     message: data.message,
-                    position: 'topRight',
+                    position: 'bottomRight',
                     timeout: 8000,
                     color: 'green',
                     balloon: true,
                     close: true,
+                    progressBarColor: 'yellow',
                 });
             });
         </script>
