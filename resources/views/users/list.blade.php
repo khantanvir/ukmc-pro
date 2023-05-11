@@ -25,53 +25,244 @@
             </div>
         </div>
         <h5 class="p-3">User List</h5>
+        <div class="widget-content widget-content-area">
+            <form>
+                 <div class="row mb-4">
+                     <div class="col-4">
+                        <select class="form-control">
+                            <option>Select Role</option>
+                            <option>Admin</option>
+                            <option>Admission Manager</option>
+                            <option>Teacher</option>
+                        </select>
+                     </div>
+                     <div class="col-4">
+                         <input type="text" class="form-control" placeholder="Enter Name">
+                     </div>
+                     <div class="col-1">
+                        <input type="submit" value="Filter" name="time" class="btn btn-warning">
+                     </div>
+                     <div class="col">
+                        <input type="submit" value="Reset" name="time" class="btn btn-danger">
+                     </div>
+                     <div class="col">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Create
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <li><a class="dropdown-item" href="#">Admission Officer</a></li>
+                                <li><a class="dropdown-item" href="#">Teacher</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+            </form>
+        </div>
         <div class="row layout-top-spacing">
 
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                 <div class="widget-content widget-content-area br-8">
-                    <table id="zero-config" class="table dt-table-hover text-center" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>User ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Role</th>
-                                <th>Create date</th>
-                                <th>Status</th>
-                                <th class="no-content">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>U00121</td>
-                                <td>Tiger Nixon</td>
-                                <td>demo@demo.com</td>
-                                <td>991144525</td>
-                                <td>Super Admin</td>
-                                <td>25-Apr-2023</td>
-                                <td>
-                                    <div class="switch form-switch-custom switch-inline form-switch-primary form-switch-custom inner-text-toggle">
-                                        <div class="input-checkbox">
-                                            <span class="switch-chk-label label-left">On</span>
-                                            <input class="switch-input" type="checkbox" role="switch" id="form-custom-switch-inner-text" checked="">
-                                            <span class="switch-chk-label label-right">Off</span>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Role</th>
+                                    <th class="text-center" scope="col">Status</th>
+                                    <th class="text-center" scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="avatar me-2">
+                                                <img alt="avatar" src="{{ asset('backend/src/assets/img/profile-7.jpeg' ) }}" class="rounded-circle" />
+                                            </div>
+                                            <div class="media-body align-self-center">
+                                                <h6 class="mb-0">Shaun Park</h6>
+                                                <span>shaun.park@mail.com</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="" class="badge badge-pill bg-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-white"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                    </a>
-                                    <a href="" class="badge badge-pill bg-warning">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 text-white"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                                    </a>
-                                    <a href="" class="badge badge-pill bg-danger">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2  delete-multiple text-white"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                    </a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    </td>
+                                    <td>
+                                        4446464646456
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">CEO</p>
+                                        <span class="text-success">Management</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="switch form-switch-custom switch-inline form-switch-primary form-switch-custom inner-text-toggle">
+                                            <div class="input-checkbox">
+                                                <span class="switch-chk-label label-left">On</span>
+                                                <input class="switch-input" type="checkbox"
+                                                    role="switch" id="form-custom-switch-inner-text"
+                                                    checked="">
+                                                <span class="switch-chk-label label-right">Off</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="action-btns">
+                                            <a href="" class="badge badge-pill bg-primary">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-white"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            </a>
+                                            <a href="" class="badge badge-pill bg-warning">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 text-white"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                            </a>
+                                            <a href="" class="badge badge-pill bg-danger">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2  delete-multiple text-white"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="avatar me-2">
+                                                <img alt="avatar" src="{{ asset('backend/src/assets/img/profile-11.jpeg' ) }}" class="rounded-circle" />
+                                            </div>
+                                            <div class="media-body align-self-center">
+                                                <h6 class="mb-0">Alma Clarke</h6>
+                                                <span>almaClarke@mail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        4446464646456
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">Lead Developer</p>
+                                        <span class="text-secondary">Programmer</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="switch form-switch-custom switch-inline form-switch-primary form-switch-custom inner-text-toggle">
+                                            <div class="input-checkbox">
+                                                <span class="switch-chk-label label-left">On</span>
+                                                <input class="switch-input" type="checkbox"
+                                                    role="switch" id="form-custom-switch-inner-text"
+                                                    checked="">
+                                                <span class="switch-chk-label label-right">Off</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="action-btns">
+                                            <a href="" class="badge badge-pill bg-primary">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-white"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            </a>
+                                            <a href="" class="badge badge-pill bg-warning">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 text-white"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                            </a>
+                                            <a href="" class="badge badge-pill bg-danger">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2  delete-multiple text-white"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="avatar me-2">
+                                                <img alt="avatar" src="{{ asset('backend/src/assets/img/profile-5.jpeg' ) }}" class="rounded-circle" />
+                                            </div>
+                                            <div class="media-body align-self-center">
+                                                <h6 class="mb-0">Vincent Carpenter</h6>
+                                                <span>vincent@mail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        4446464646456
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">HR</p>
+                                        <span class="text-danger">Management</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="switch form-switch-custom switch-inline form-switch-primary form-switch-custom inner-text-toggle">
+                                            <div class="input-checkbox">
+                                                <span class="switch-chk-label label-left">On</span>
+                                                <input class="switch-input" type="checkbox"
+                                                    role="switch" id="form-custom-switch-inner-text"
+                                                    checked="">
+                                                <span class="switch-chk-label label-right">Off</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="action-btns">
+                                            <a href="" class="badge badge-pill bg-primary">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-white"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            </a>
+                                            <a href="" class="badge badge-pill bg-warning">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 text-white"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                            </a>
+                                            <a href="" class="badge badge-pill bg-danger">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2  delete-multiple text-white"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="avatar me-2">
+                                                <img alt="avatar" src="{{ asset('backend/src/assets/img/profile-34.jpeg' ) }}" class="rounded-circle" />
+                                            </div>
+                                            <div class="media-body align-self-center">
+                                                <h6 class="mb-0">Xavier</h6>
+                                                <span>xavier@mail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        4446464646456
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">Lead Designer</p>
+                                        <span class="text-info">Graphic</span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <div class="switch form-switch-custom switch-inline form-switch-primary form-switch-custom inner-text-toggle">
+                                            <div class="input-checkbox">
+                                                <span class="switch-chk-label label-left">On</span>
+                                                <input class="switch-input" type="checkbox"
+                                                    role="switch" id="form-custom-switch-inner-text"
+                                                    checked="">
+                                                <span class="switch-chk-label label-right">Off</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="action-btns">
+                                            <a href="" class="badge badge-pill bg-primary">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-white"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            </a>
+                                            <a href="" class="badge badge-pill bg-warning">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 text-white"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                            </a>
+                                            <a href="" class="badge badge-pill bg-danger">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2  delete-multiple text-white"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 

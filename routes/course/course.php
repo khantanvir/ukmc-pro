@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -10,4 +10,6 @@ Route::controller(CourseController::class)->group(function () {
     Route::get('course-create', 'create');
     Route::get('all-course', 'all');
     Route::get('archived-courses', 'archive');
+    Route::get('course-categories', 'course_categories');
+    Route::get('course-levels', 'course_levels');
 });

@@ -25,4 +25,16 @@ class CourseController extends Controller
         $data['course_archive'] = true;
         return view('course/archive',$data);
     }
+    public function course_categories(){
+        $data['page_title'] = 'Course | Categories';
+        $data['course'] = true;
+        $data['course_categories'] = true;
+        return view('course/categories',$data);
+    }
+    public function course_levels(){
+        $data['page_title'] = 'Course | Levels';
+        $data['course'] = true;
+        $data['course_levels'] = true;
+        return view('course/levels',$data);
+    }
 }

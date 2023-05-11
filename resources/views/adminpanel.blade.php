@@ -375,7 +375,7 @@
                     timeout: 8000,
                     color: 'green',
                     balloon: true,
-                    close: true,
+                    close: true,
                     progressBarColor: 'yellow',
                 });
             });

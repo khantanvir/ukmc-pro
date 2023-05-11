@@ -98,6 +98,12 @@
                 <li class="{{ (!empty($course_archive) && $course_archive==true)?'active':'' }}">
                     <a href="{{ URL::to('archived-courses') }}"> Archive Course </a>
                 </li>
+                <li class="{{ (!empty($course_categories) && $course_categories==true)?'active':'' }}">
+                    <a href="{{ URL::to('course-categories') }}"> Course Categories </a>
+                </li>
+                <li class="{{ (!empty($course_levels) && $course_levels==true)?'active':'' }}">
+                    <a href="{{ URL::to('course-levels') }}"> Course Levels </a>
+                </li>
             </ul>
         </li>
         <li class="menu {{ (!empty($usermanagement) && $usermanagement==true)?'active':'' }}">
