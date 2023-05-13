@@ -7,20 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Task\TaskController;
 use App\Http\Controllers\Setting\SettingController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\Login\LoginController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index');
@@ -37,6 +25,11 @@ Route::controller(SettingController::class)->group(function () {
     Route::get('company-settings', 'company_settings');
     Route::get('profile-settings', 'profile_settings');
     Route::get('edit_profile', 'edit_profile');
+});
+
+Route::controller(LoginController::class)->group(function () {
+    Route::post('user-login-post', 'user_login');
+    Route::get('sign-out', 'sign_out');
 });
 
 Route::get('test', function () {

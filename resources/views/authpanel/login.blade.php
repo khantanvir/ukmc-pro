@@ -6,6 +6,8 @@
             <div class="card-body">
 
                 <div class="row">
+                    <form id="login-form" method="POST" action="{{ URL::to('user-login-post') }}">
+                        @csrf
                     <div class="col-md-12 mb-3">
 
                         <h2>Sign In</h2>
@@ -15,19 +17,25 @@
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control">
+                            <input value="{{ (!empty(Session::get('user_email')))?Session::get('user_email'):old('email') }}" id="email" name="email" type="email" class="form-control">
+                            @if ($errors->has('email'))
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="mb-4">
                             <label class="form-label">Password</label>
-                            <input type="text" class="form-control">
+                            <input value="{{ (!empty(Session::get('user_password')))?Session::get('user_password'):old('password') }}" name="password" id="password" type="password" class="form-control">
+                            @if ($errors->has('password'))
+                                <span class="text-danger">{{ $errors->first('password') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="mb-3">
                             <div class="form-check form-check-primary form-check-inline">
-                                <input class="form-check-input me-3" type="checkbox" id="form-check-default">
+                                <input name="remember_me" value="remember_me" class="form-check-input me-3" type="checkbox" id="remember-me" {{ (!empty(Session::get('rememberMe')) && Session::get('rememberMe')=='remember_me')?'checked':'' }}>
                                 <label class="form-check-label" for="form-check-default">
                                     Remember me
                                 </label>
@@ -37,7 +45,7 @@
 
                     <div class="col-12">
                         <div class="mb-4">
-                            <button class="btn btn-secondary w-100">SIGN IN</button>
+                            <button id="submit-btn" class="btn btn-secondary w-100">SIGN IN</button>
                         </div>
                     </div>
 
@@ -54,7 +62,7 @@
                             <p class="mb-0">Forgot Password ? <a href="{{ URL::to('reset-password') }}" class="text-warning">Click Here</a></p>
                         </div>
                     </div>
-
+                  </form>
                 </div>
 
             </div>
