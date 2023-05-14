@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Traits\Service;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller{
     use Service;
@@ -23,7 +26,10 @@ class HomeController extends Controller{
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        Service::auth_check();
+        if(!Auth::check()){
+            Session::flash('error','Login First! Then See Dashboard!');
+            return redirect('login');
+        }
         $data['page_title'] = 'Dashboard';
         $data['dashboard'] = true;
         return view('dashboard/index',$data);
@@ -36,10 +42,6 @@ class HomeController extends Controller{
     public function login(){
         $data['page_title'] = 'User | Login';
         return view('authpanel/login',$data);
-    }
-    public function reset_password(){
-        $data['page_title'] = 'User | Reset Password';
-        return view('authpanel/reset_password',$data);
     }
     public function create_teacher(){
         $data['page_title'] = 'User | Create Teacher';

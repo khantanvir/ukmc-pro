@@ -20,8 +20,8 @@
                                 </div>
                                 <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#">Application</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Create</li>
+                                        <li class="breadcrumb-item"><a href="{{ URL::to('/') }}">Dashboard</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Company Settings</li>
                                     </ol>
                                 </nav>
 
@@ -30,117 +30,167 @@
                     </header>
                 </div>
             </div>
-            <form enctype="multipart/form-data">
+            <form method="post" action="{{ URL::to('company-setting-post') }}" enctype="multipart/form-data">
+                @csrf
                 <div id="card_1" class="col-lg-12 layout-spacing layout-top-spacing">
                     <div class="statbox widget box box-shadow">
                         <div class="widget-content widget-content-area">
-                            <div class="row mb-2">
+                            <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                                     <div class="d-flex align-items-start justify-content-between">
-                                        <h5>Software Information</h5>
+                                        <h5>Company Information</h5>
                                     </div><br>
                                 </div>
-                                <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Country</label><select class="form-control">
-                                            <option disabled="" value="">Select Represent Country</option>
-                                            <option value="1">United Kingdom</option>
-                                            <option value="2">Australia</option>
-                                            <option value="3">United States</option>
-                                            <option value="4">Canada</option>
-                                            <option value="cc62d0833e6545c79e32089c78bf41bc">New Zealand</option>
-                                            <option value="ce9d34b2590d4c2886a15126b9e61c2b">Ireland</option>
-                                            <option value="e0fd049e09d84782a14558530ae2c317">Germany</option>
+                                <div class="col col-md-6">
+                                    <div class="form-group mb-2"><label for="personName">Company Name</label>
+                                        <input id="personName" type="text" class="form-control" value="{{ (!empty($company_data->company_name))?$company_data->company_name:'' }}" name="company_name">
+                                    </div>
+                                </div>
+                                <div class="col col-md-6">
+                                    <div class="form-group mb-2">
+                                        <label for="personName">Company Country</label>
+                                        <select name="country" class="form-control">
+                                            <option value="">--Select Company Country--</option>
+                                            @foreach ($countries as $country)
+                                                <option {{ (!empty($company_data->country) && $company_data->country==$country)?'selected':'' }} value="{{ $country }}">{{ $country }}</option>
+                                            @endforeach
+                                            
                                         </select>
-                                        <ul>
-                                            <!---->
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">City</label><input type="text" class="form-control" name="institute_name">
-                                        <ul>
-                                            <!---->
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-2"><label
-                                            for="exampleFormControlInput1">Currency</label><input type="text"
-                                            class="form-control" name="currency">
-                                        <ul>
-                                            <!---->
-                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-2">
-
-                                <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Address</label><input type="text" class="form-control" name="campus_name">
-                                        <ul>
-                                            <!---->
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Website</label><input
-                                            type="text" class="form-control" name="website">
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                            <div class="row">
+                                <div class="col col-md-7">
+                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Address</label>
+                                        <textarea name="address" id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false" name="institute_important_notes">{{ (!empty($company_data->address))?$company_data->address:'' }}</textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlTextarea1">Scholarship
-                                            Policy</label>
-                                        <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="scholarship_policy"></textarea>
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                            <div class="row">
+                                <div class="col col-md-4">
+                                    <div class="form-group mb-2"><label for="personName">State</label>
+                                        <input id="state" type="text" class="form-control" value="{{ (!empty($company_data->state))?$company_data->state:'' }}" name="state">
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlTextarea1"> Institute
-                                            Important Notes</label>
-                                        <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="institute_important_notes"></textarea>
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                <div class="col col-md-4">
+                                    <div class="form-group mb-2"><label for="personName">City</label>
+                                        <input id="city" type="text" class="form-control" value="{{ (!empty($company_data->city))?$company_data->city:'' }}" name="city">
                                     </div>
                                 </div>
+                                <div class="col col-md-4">
+                                    <div class="form-group mb-2"><label for="personName">Zip Code<Code></Code></label>
+                                        <input id="zip_code" type="text" class="form-control" value="{{ (!empty($company_data->zip_code))?$company_data->zip_code:'' }}" name="zip_code">
+                                    </div>
+                                </div>
+                                
                             </div>
-                            <div class="row mb-2">
+                            <div class="row">
                                 <div class="col">
                                     <div class="row d-flex align-items-center">
-                                        <div class="col col-md-8">
-                                            <div class="form-group mb-2"><label>Upload Logo</label><label
+                                        <div class="col col-md-6">
+                                            <div class="form-group mb-2"><label>Company Logo</label><label
                                                     class="custom-file-container__custom-file"><input type="file"
                                                         class="form-control-file" accept="image/*"
-                                                        name="institute_logo"></label>
-                                                <ul>
-                                                    <!---->
-                                                </ul>
-                                                <div class="custom-file-container__image-preview"></div>
+                                                        name="company_logo"></label>
+                                                @if(!empty($company_data->company_logo))
+                                                    <img width="160" height="65" src="{{ asset($company_data->company_logo) }}" class="custom-file-container__image-preview"/>
+                                                @endif
                                             </div>
                                         </div>
-                                        <div class="col col-md-4">
-                                            <!---->
+                                        <div class="col col-md-6">
+                                            <div class="form-group mb-2"><label>Company Logo</label><label
+                                                class="custom-file-container__custom-file"><input type="file"
+                                                    class="form-control-file" accept="image/*"
+                                                    name="company_banner"></label>
+                                            @if(!empty($company_data->company_banner))
+                                                <img width="250" height="80" src="{{ asset($company_data->company_banner) }}" class="custom-file-container__image-preview"/>
+                                            @endif
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col col-md-8">
-                                            <div class="form-group mb-2"><label>Prospectus</label><label
-                                                    class="custom-file-container__custom-file"><input type="file"
-                                                        class="form-control-file"></label></div>
-                                        </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-4">
+                                    <div class="form-group mb-2"><label for="personName">Email</label>
+                                        <input id="email" type="text" class="form-control" value="{{ (!empty($company_data->email))?$company_data->email:'' }}" name="email">
                                     </div>
                                 </div>
+                                <div class="col col-md-4">
+                                    <div class="form-group mb-2"><label for="personName">Phone</label>
+                                        <input id="phone" type="text" class="form-control" value="{{ (!empty($company_data->phone))?$company_data->phone:'' }}" name="phone">
+                                    </div>
+                                </div>
+                                <div class="col col-md-4">
+                                    <div class="form-group mb-2"><label for="personName">Website<Code></Code></label>
+                                        <input id="website" type="text" class="form-control" value="{{ (!empty($company_data->website))?$company_data->website:'' }}" name="website">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-6">
+                                    <div class="form-group mb-2"><label for="personName">CRM Website</label>
+                                        <input id="crm_website" type="text" class="form-control" value="{{ (!empty($company_data->crm_website))?$company_data->crm_website:'' }}" name="crm_website">
+                                    </div>
+                                </div>
+                                <div class="col col-md-6">
+                                    <div class="form-group mb-2"><label for="personName">Contact Us</label>
+                                        <input id="contact_us" type="text" class="form-control" value="{{ (!empty($company_data->contact_us))?$company_data->contact_us:'' }}" name="contact_us">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-6">
+                                    <div class="form-group mb-2"><label for="personName">Privacy Policy Link</label>
+                                        <input id="privacy_policy" type="text" class="form-control" value="{{ (!empty($company_data->privacy_policy))?$company_data->privacy_policy:'' }}" name="privacy_policy">
+                                    </div>
+                                </div>
+                                <div class="col col-md-6">
+                                    <div class="form-group mb-2"><label for="personName">Terms And Condition Link</label>
+                                        <input id="terms_and_condition" type="text" class="form-control" value="{{ (!empty($company_data->terms_and_condition))?$company_data->terms_and_condition:'' }}" name="terms_and_condition">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-3">
+                                    <div class="form-group mb-2"><label for="personName">Facebook</label>
+                                        <input id="facebook" type="text" class="form-control" value="{{ (!empty($company_data->facebook))?$company_data->facebook:'' }}" name="facebook">
+                                    </div>
+                                </div>
+                                <div class="col col-md-3">
+                                    <div class="form-group mb-2"><label for="personName">Instagram</label>
+                                        <input id="instagram" type="text" class="form-control" value="{{ (!empty($company_data->instagram))?$company_data->instagram:'' }}" name="instagram">
+                                    </div>
+                                </div>
+                                <div class="col col-md-3">
+                                    <div class="form-group mb-2"><label for="personName">Linkedin</label>
+                                        <input id="linkedin" type="text" class="form-control" value="{{ (!empty($company_data->linkedin))?$company_data->linkedin:'' }}" name="linkedin">
+                                    </div>
+                                </div>
+                                <div class="col col-md-3">
+                                    <div class="form-group mb-2"><label for="personName">Twitter</label>
+                                        <input id="twitter" type="text" class="form-control" value="{{ (!empty($company_data->twitter))?$company_data->twitter:'' }}" name="twitter">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-4">
+                                    <div class="form-group mb-2"><label for="personName">Pinterest</label>
+                                        <input id="pinterest" type="text" class="form-control" value="{{ (!empty($company_data->pinterest))?$company_data->pinterest:'' }}" name="pinterest">
+                                    </div>
+                                </div>
+                                <div class="col col-md-4">
+                                    <div class="form-group mb-2"><label for="personName">Youtube</label>
+                                        <input id="youtube" type="text" class="form-control" value="{{ (!empty($company_data->youtube))?$company_data->youtube:'' }}" name="youtube">
+                                    </div>
+                                </div>
+                                <div class="col col-md-4">
+                                    <div class="form-group mb-2"><label for="personName">Whatsapp</label>
+                                        <input id="whatsapp" type="text" class="form-control" value="{{ (!empty($company_data->whatsapp))?$company_data->whatsapp:'' }}" name="whatsapp">
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -156,23 +206,23 @@
                                     <div class="row">
                                         <div class="col col-md-3">
                                             <div class="form-group mb-2"><label for="personName">Contact Person
-                                                    Name</label><input id="personName" type="text"
-                                                    class="form-control" name="contacts.0.name">
+                                                    Name</label><input id="contact_person_name" type="text"
+                                                    class="form-control" value="{{ (!empty($company_data->contact_person_name))?$company_data->contact_person_name:'' }}" name="contact_person_name">
                                             </div>
                                         </div>
                                         <div class="col col-md-3">
                                             <div class="form-group mb-2"><label for="email">Email</label><input
-                                                    type="email" class="form-control" name="contacts.0.email">
+                                                    type="email" class="form-control" value="{{ (!empty($company_data->contact_person_email))?$company_data->contact_person_email:'' }}" name="contact_person_email">
                                             </div>
                                         </div>
                                         <div class="col col-md-3">
                                             <div class="form-group mb-2"><label for="phone">Phone</label><input
-                                                    type="text" class="form-control" name="contacts.0.phone">
+                                                    type="text" value="{{ (!empty($company_data->contact_person_phone))?$company_data->contact_person_phone:'' }}" class="form-control" name="contact_person_phone">
                                             </div>
                                         </div>
                                         <div class="col col-md-3">
                                             <div class="form-group mb-2"><label for="alternate_phone">Alternate
-                                                    Phone</label><input type="text" class="form-control"
+                                                    Phone</label><input type="text" name="contact_person_alternative" value="{{ (!empty($company_data->contact_person_alternative))?$company_data->contact_person_alternative:'' }}" class="form-control"
                                                     name="contacts.0.alternate_phone">
                                                 <ul>
                                                     <!---->

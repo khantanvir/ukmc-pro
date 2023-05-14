@@ -8,6 +8,15 @@ use Illuminate\Support\Facades\Session;
 Use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Login\LoginRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
+use PharIo\Manifest\Url as ManifestUrl;
+use App\Models\Setting\CompanySetting;
+use App\Mail\forgotPasswordMail;
 
 class LoginController extends Controller
 {
@@ -46,4 +55,40 @@ class LoginController extends Controller
         Session::flash('success', 'Logout Successfully!');
         return redirect('login');
     }
+    //reset password
+    public function reset_password(){
+        $data['page_title'] = 'User | Reset Password';
+        return view('authpanel/reset_password',$data);
+    }
+    //reset password post
+    public function reset_password_post(Request $request){
+        $request->validate([
+            'email' => 'required|email|exists:users',
+        ]);
+
+        $token = Str::random(64);
+
+        DB::table('password_resets')->insert([
+            'email' => $request->email, 
+            'token' => $token, 
+            'created_at' => Carbon::now()
+          ]);
+
+          $details = [
+            'create_link' => url('reset-password-form/'.$token),
+            'settings' => CompanySetting::where('id',1)->first(),
+            //'password' => $make_password,
+        ];
+        //mail send 
+        Mail::to($request->email)->send(new forgotPasswordMail($details));
+        Session::flash('success','We have e-mailed your password reset link!');
+        return redirect('reset-password');
+    }
+    //reset password form 
+    public function reset_password_form($token){
+        $data['page_title'] = 'User | Reset Password Form';
+        $data['token'] = $token;
+        return view('authpanel/reset_password_form',$data);
+    }
+
 }

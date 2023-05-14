@@ -9,24 +9,33 @@
                 <div class="row">
                     <form id="login-form" method="POST" action="{{ URL::to('reset-password-post') }}">
                         @csrf
+                        <input type="hidden" name="token" value="{{ $token }}">
                     <div class="col-md-12 mb-3">
                         
-                        <h2>Password Reset</h2>
-                        <p>Enter your email to recover your ID</p>
+                        <h2>Password Form</h2>
                         
                     </div>
                     <div class="col-md-12">
                         <div class="mb-4">
-                            <label class="form-label">Email</label>
+                            <label class="form-label">Old Password</label>
+                            <input name="email" type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <label class="form-label">New Password</label>
                             <input name="email" type="email" class="form-control">
-                            @if ($errors->has('email'))
-                               <span class="text-danger">{{ $errors->first('email') }}</span>
-                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <label class="form-label">Confirm New Password</label>
+                            <input name="email" type="email" class="form-control">
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="mb-4">
-                            <button class="btn btn-secondary w-100">RECOVER</button>
+                            <button class="btn btn-secondary w-100">Confirm Now</button>
                         </div>
                     </div>
                     <div class="col-12">

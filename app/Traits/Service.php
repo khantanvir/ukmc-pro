@@ -653,4 +653,16 @@ trait Service
         ];
         return $roles;
     }
+    //get company country 
+    public static function get_company_country(){
+        $country = array(
+            'United Kingdom',
+            'United States',
+            'Australia',
+            'Canada',
+            'Bangladesh',
+            'Dubai',
+        );
+        return $country;
+    }
 }
