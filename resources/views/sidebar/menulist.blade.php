@@ -18,6 +18,7 @@
         </div>
     </div>
     <div class="shadow-bottom"></div>
+    @if(Auth::check())
     <ul class="list-unstyled menu-categories" id="accordionExample" >
         <li class="menu {{ (!empty($dashboard) && $dashboard==true)?'active':'' }}">
             <a href="{{ URL::to('/') }}" data-bs-toggle="" aria-expanded="true" class="dropdown-toggle">
@@ -183,5 +184,6 @@
         @endif
 
     </ul>
+    @endif
 
 </nav>
