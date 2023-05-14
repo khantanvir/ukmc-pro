@@ -8,4 +8,5 @@ use App\Http\Controllers\Agent\AgentController;
 
 Route::controller(AgentController::class)->group(function () {
     Route::get('agents', 'agents');
+    Route::get('create-agent', 'create_agent');
 });

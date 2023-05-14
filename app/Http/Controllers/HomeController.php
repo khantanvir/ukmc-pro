@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Traits\Service;
 
-class HomeController extends Controller
-{
+class HomeController extends Controller{
+    use Service;
     /**
      * Create a new controller instance.
      *
@@ -22,6 +23,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
+        Service::auth_check();
         $data['page_title'] = 'Dashboard';
         $data['dashboard'] = true;
         return view('dashboard/index',$data);
@@ -38,5 +40,15 @@ class HomeController extends Controller
     public function reset_password(){
         $data['page_title'] = 'User | Reset Password';
         return view('authpanel/reset_password',$data);
+    }
+    public function create_teacher(){
+        $data['page_title'] = 'User | Create Teacher';
+        $data['usermanagement'] = true;
+        return view('users/create_teacher',$data);
+    }
+    public function create_admission_manager(){
+        $data['page_title'] = 'User | Create Admission Manager';
+        $data['usermanagement'] = true;
+        return view('users/create_admiossion_manager',$data);
     }
 }

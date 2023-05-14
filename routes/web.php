@@ -15,6 +15,8 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('login', 'login');
     Route::get('reset-password', 'reset_password');
     Route::get('user-list', 'user_list');
+    Route::get('create-teacher', 'create_teacher');
+    Route::get('create-admission-manager', 'create_admission_manager');
 });
 Route::controller(TaskController::class)->group(function () {
     Route::get('task-create', 'create');

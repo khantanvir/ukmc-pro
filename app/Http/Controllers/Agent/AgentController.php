@@ -11,7 +11,11 @@ class AgentController extends Controller
     public function agents(){
         $data['page_title'] = 'Agents / List';
         $data['agent'] = true;
-        Session::flash('warning','Agent List Show! Toast Test!');
         return view('agent/all',$data);
+    }
+    public function create_agent(){
+        $data['page_title'] = 'Agents / Create Agent';
+        $data['agent'] = true;
+        return view('agent/create_agent',$data);
     }
 }
