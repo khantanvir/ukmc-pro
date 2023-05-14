@@ -7,7 +7,7 @@
             <div class="card-body">
 
                 <div class="row">
-                    <form id="login-form" method="POST" action="{{ URL::to('reset-password-post') }}">
+                    <form id="login-form" method="POST" action="{{ URL::to('reset-password-form-post') }}">
                         @csrf
                         <input type="hidden" name="token" value="{{ $token }}">
                     <div class="col-md-12 mb-3">
@@ -17,20 +17,29 @@
                     </div>
                     <div class="col-md-12">
                         <div class="mb-4">
-                            <label class="form-label">Old Password</label>
-                            <input name="email" type="password" class="form-control">
+                            <label class="form-label">Email</label>
+                            <input name="email" type="email" value="{{ old('email') }}" class="form-control">
+                            @if($errors->has('email'))
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="mb-4">
                             <label class="form-label">New Password</label>
-                            <input name="email" type="email" class="form-control">
+                            <input name="password" type="password" class="form-control">
+                            @if($errors->has('password'))
+                                <span class="text-danger">{{ $errors->first('password') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="mb-4">
                             <label class="form-label">Confirm New Password</label>
-                            <input name="email" type="email" class="form-control">
+                            <input name="password_confirmation" type="password" class="form-control">
+                            @if($errors->has('password_confirmation'))
+                               <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-12">

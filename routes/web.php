@@ -35,6 +35,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('reset-password', 'reset_password');
     Route::post('reset-password-post', 'reset_password_post');
     Route::get('reset-password-form/{token?}', 'reset_password_form');
+    Route::post('reset-password-form-post', 'reset_password_form_post');
 });
 
 Route::get('test', function () {

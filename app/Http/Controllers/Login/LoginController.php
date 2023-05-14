@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\URL;
 use PharIo\Manifest\Url as ManifestUrl;
 use App\Models\Setting\CompanySetting;
 use App\Mail\forgotPasswordMail;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -89,6 +90,32 @@ class LoginController extends Controller
         $data['page_title'] = 'User | Reset Password Form';
         $data['token'] = $token;
         return view('authpanel/reset_password_form',$data);
+    }
+    //reset password form post 
+    public function reset_password_form_post(Request $request){
+        $request->validate([
+            'email' => 'required|email|exists:users',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required'
+        ]);
+
+        $updatePassword = DB::table('password_resets')
+                            ->where([
+                              'email' => $request->email, 
+                              'token' => $request->token
+                            ])
+                            ->first();
+
+        if(!$updatePassword){
+            return back()->withInput()->with('error', 'Invalid token!');
+        }
+
+        $user = User::where('email', $request->email)
+                    ->update(['password' => Hash::make($request->password)]);
+
+        DB::table('password_resets')->where(['email'=> $request->email])->delete();
+
+        return redirect('login')->with('success', 'Your password has been changed!');
     }
 
 }
