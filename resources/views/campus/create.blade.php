@@ -30,7 +30,8 @@
                     </header>
                 </div>
             </div>
-            <form enctype="multipart/form-data">
+            <form method="post" action="{{ URL::to('store-campus-data') }}" enctype="multipart/form-data">
+                @csrf
                 <div id="card_1" class="col-lg-12 layout-spacing layout-top-spacing">
                     <div class="statbox widget box box-shadow">
                         <div class="widget-content widget-content-area">
@@ -50,145 +51,131 @@
                                     </div><br>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Country</label><select class="form-control">
-                                            <option disabled="" value="">Select Represent Country</option>
-                                            <option value="1">United Kingdom</option>
-                                            <option value="2">Australia</option>
-                                            <option value="3">United States</option>
-                                            <option value="4">Canada</option>
-                                            <option value="cc62d0833e6545c79e32089c78bf41bc">New Zealand</option>
-                                            <option value="ce9d34b2590d4c2886a15126b9e61c2b">Ireland</option>
-                                            <option value="e0fd049e09d84782a14558530ae2c317">Germany</option>
+                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Country*</label>
+                                        <select name="country" class="form-control">
+                                            <option value="">Select Country</option>
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country }}">{{ $country }}</option>
+                                            @endforeach
                                         </select>
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                        @if ($errors->has('country'))
+                                            <span class="text-danger">{{ $errors->first('country') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">City</label><input type="text" class="form-control" name="institute_name">
-                                        <ul>
-                                            <!---->
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Campus
-                                            Name</label><input type="text" class="form-control" name="campus_name">
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                    <div class="form-group mb-2">
+                                        <label for="exampleFormControlInput1">Campus Name*</label>
+                                        <input value="{{ old('campus_name') }}" type="text" class="form-control" name="campus_name">
+                                        @if ($errors->has('campus_name'))
+                                            <span class="text-danger">{{ $errors->first('campus_name') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Website</label><input
-                                            type="text" class="form-control" name="website">
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                            type="text" class="form-control" value="{{ old('website') }}" name="website">
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Monthly Living
-                                            Cost</label><input type="text" class="form-control"
-                                            name="monthly_living_cost">
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Monthly Living Cost*</label>
+                                        <input type="text" class="form-control" value="{{ old('monthly_living_cost') }}" name="monthly_living_cost">
+                                        @if ($errors->has('monthly_living_cost'))
+                                            <span class="text-danger">{{ $errors->first('monthly_living_cost') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Funds Requirements
-                                            for Visa</label><input type="text" class="form-control"
-                                            name="funds_requirements_for_visa">
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                            for Visa*</label><input type="text" class="form-control"
+                                            name="funds_requirements_for_visa" value="{{ old('funds_requirements_for_visa') }}">
+                                        @if ($errors->has('funds_requirements_for_visa'))
+                                            <span class="text-danger">{{ $errors->first('funds_requirements_for_visa') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Application
-                                            Fees</label><input type="text" class="form-control"
-                                            name="application_fee">
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Application Fees*</label>
+                                        <input type="text" class="form-control" name="application_fee" value="{{ old('application_fee') }}">
+                                        @if ($errors->has('application_fee'))
+                                            <span class="text-danger">{{ $errors->first('application_fee') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-2"><label
-                                            for="exampleFormControlInput1">Currency</label><input type="text"
-                                            class="form-control" name="currency">
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                            for="exampleFormControlInput1">Currency*</label><input type="text"
+                                            class="form-control" name="currency" value="{{ old('currency') }}">
+                                        @if ($errors->has('currency'))
+                                            <span class="text-danger">{{ $errors->first('currency') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Is Language
-                                            Mandatory</label><input type="text" class="form-control"
-                                            placeholder="Yes or No" name="is_lang_mendatory">
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                            Mandatory*</label><input type="text" class="form-control"
+                                            placeholder="Yes or No" name="is_lang_mendatory" value="{{ old('is_lang_mendatory') }}">
+                                        @if ($errors->has('is_lang_mendatory'))
+                                            <span class="text-danger">{{ $errors->first('is_lang_mendatory') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlTextarea1">Language
-                                            Requirements</label>
+                                            Requirements*</label>
                                         <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="lang_requirements"></textarea>
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                            name="lang_requirements">{{ old('lang_requirements') }}</textarea>
+                                        @if ($errors->has('lang_requirements'))
+                                            <span class="text-danger">{{ $errors->first('lang_requirements') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlTextarea1">Institute
-                                            Benifits</label>
+                                    <div class="form-group mb-2"><label for="exampleFormControlTextarea1">Campus
+                                            Benifits*</label>
                                         <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="institute_benifits"></textarea>
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                            name="institute_benifits">{{ old('institute_benifits') }}</textarea>
+                                        @if ($errors->has('institute_benifits'))
+                                            <span class="text-danger">{{ $errors->first('institute_benifits') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlTextarea1"> Part Time Work
-                                            Details</label>
+                                            Details*</label>
                                         <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="per_time_work_details"></textarea>
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                            name="per_time_work_details">{{ old('per_time_work_details') }}</textarea>
+                                        @if ($errors->has('per_time_work_details'))
+                                            <span class="text-danger">{{ $errors->first('per_time_work_details') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlTextarea1">Scholarship
-                                            Policy</label>
+                                            Policy*</label>
                                         <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="scholarship_policy"></textarea>
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                            name="scholarship_policy">{{ old('scholarship_policy') }}</textarea>
+                                        @if ($errors->has('scholarship_policy'))
+                                            <span class="text-danger">{{ $errors->first('scholarship_policy') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlTextarea1"> Institute
-                                            Important Notes</label>
+                                    <div class="form-group mb-2"><label for="exampleFormControlTextarea1"> Campus
+                                            Important Notes*</label>
                                         <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="institute_important_notes"></textarea>
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                            name="institute_important_notes">{{ old('institute_important_notes') }}</textarea>
+                                        @if ($errors->has('institute_important_notes'))
+                                            <span class="text-danger">{{ $errors->first('institute_important_notes') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -196,13 +183,13 @@
                                 <div class="col">
                                     <div class="row d-flex align-items-center">
                                         <div class="col col-md-8">
-                                            <div class="form-group mb-2"><label>Upload Institute Logo</label><label
+                                            <div class="form-group mb-2"><label>Upload Campus Logo*</label><label
                                                     class="custom-file-container__custom-file"><input type="file"
                                                         class="form-control-file" accept="image/*"
                                                         name="institute_logo"></label>
-                                                <ul>
-                                                    <!---->
-                                                </ul>
+                                                    @if ($errors->has('institute_logo'))
+                                                        <span class="text-danger">{{ $errors->first('institute_logo') }}</span>
+                                                    @endif
                                                 <div class="custom-file-container__image-preview"></div>
                                             </div>
                                         </div>
@@ -214,18 +201,18 @@
                                 <div class="col">
                                     <div class="row d-flex align-items-center">
                                         <div class="col col-md-8">
-                                            <div class="form-group mb-2"><label>Institute Prospectus</label><label
+                                            <div class="form-group mb-2"><label>Campus Prospectus</label><label
                                                     class="custom-file-container__custom-file"><input type="file"
-                                                        class="form-control-file"></label></div>
+                                                        class="form-control-file" name="institute_prospectus"></label></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="row d-flex align-items-center">
                                         <div class="col col-md-8">
-                                            <div class="form-group mb-2"><label>Institute Course Module</label><label
+                                            <div class="form-group mb-2"><label>Campus Course Module</label><label
                                                     class="custom-file-container__custom-file"><input type="file"
-                                                        class="form-control-file"></label>
+                                                        class="form-control-file" name="institute_course_pdf"></label>
                                                 <div class="custom-file-container__image-preview"></div>
                                             </div>
                                         </div>
@@ -240,73 +227,58 @@
                         <div class="widget-content widget-content-area">
                             <div class="row mb-2">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>University Contact Person</h4><br>
+                                    <h4>Campus Contact Person</h4><br>
                                 </div>
                                 <div class="col col-md-12">
+                                    <div class="col col-md-12 text-right">
+                                        <div class="row ml-4">
+                                            <div><a id="addAttributeButton" class="btn btn-warning btn-rounded mb-2 mr-2 inline-flex"> Add
+                                                    More <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" class="feather feather-plus-circle">
+                                                        <circle cx="12" cy="12" r="10">
+                                                        </circle>
+                                                        <line x1="12" y1="8" x2="12"
+                                                            y2="16"></line>
+                                                        <line x1="8" y1="12" x2="16"
+                                                            y2="12"></line>
+                                                    </svg></a></div>
+                                        </div>
+                                    </div>
                                     <div class="row">
-                                        <div class="col col-md-3">
-                                            <div class="form-group mb-2"><label for="personName">Contact Person
-                                                    Name</label><input id="personName" type="text"
-                                                    class="form-control" name="contacts.0.name">
-                                                <ul>
-                                                    <li class="error">Value is required</li>
-                                                </ul>
+                                        <div id="select-wrapper">
+                                            <div id="element-wrapper">
+                                                <div class="row">
+                                                    <div class="col col-md-3">
+                                                        <div class="form-group mb-2"><label for="personName">Contact Person
+                                                                Name</label>
+                                                                <input id="personName" type="text" class="form-control" name="name[]">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-md-3">
+                                                        <div class="form-group mb-2"><label for="email">Email</label><input
+                                                                type="email" class="form-control" name="email[]">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-md-3">
+                                                        <div class="form-group mb-2"><label for="phone">Phone</label><input
+                                                                type="text" class="form-control" name="phone[]">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-md-3">
+                                                        <div class="form-group mb-2"><label for="alternate_phone">Alternate
+                                                                Phone</label><input type="text" class="form-control"
+                                                                name="alternate_phone[]">
+                                                        </div>
+                                                    </div>
+                                                    <br><span class="input-group-btn"><button type="button" class="btn btn-danger remove-attribute-element"><i class="glyphicon glyphicon-minus"></i>-</button></span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col col-md-3">
-                                            <div class="form-group mb-2"><label for="email">Email</label><input
-                                                    type="email" class="form-control" name="contacts.0.email">
-                                                <ul>
-                                                    <li class="error">Value is required</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col col-md-3">
-                                            <div class="form-group mb-2"><label for="phone">Phone</label><input
-                                                    type="text" class="form-control" name="contacts.0.phone">
-                                                <ul>
-                                                    <li class="error">Value is required</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col col-md-3">
-                                            <div class="form-group mb-2"><label for="alternate_phone">Alternate
-                                                    Phone</label><input type="text" class="form-control"
-                                                    name="contacts.0.alternate_phone">
-                                                <ul>
-                                                    <!---->
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col col-md-12 text-right">
-                                            <div class="row ml-4">
-                                                <div><button class="btn btn-warning btn-rounded mb-2 mr-2 inline-flex"> Add
-                                                        More <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round" class="feather feather-plus-circle">
-                                                            <circle cx="12" cy="12" r="10">
-                                                            </circle>
-                                                            <line x1="12" y1="8" x2="12"
-                                                                y2="16"></line>
-                                                            <line x1="8" y1="12" x2="16"
-                                                                y2="12"></line>
-                                                        </svg></button></div>
-                                                <div style="display: none;"><button
-                                                        class="btn btn-danger btn-rounded mb-2 mr-2 inline-flex"> Remove
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round" class="feather feather-x-circle">
-                                                            <circle cx="12" cy="12" r="10">
-                                                            </circle>
-                                                            <line x1="15" y1="9" x2="9"
-                                                                y2="15"></line>
-                                                            <line x1="9" y1="9" x2="15"
-                                                                y2="15"></line>
-                                                        </svg></button></div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <div class="row mt-5">
                                         <div class="col"><button type="button" class="btn btn-warning btn-lg me-2">
