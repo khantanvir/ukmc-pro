@@ -414,12 +414,24 @@
                 });
                 $("#select-wrapper").on("click",".remove-attribute-element", function(e){
                     e.preventDefault();
+                    
                     if(count > 1){
                         $(this).parents("#element-wrapper").remove();
                         count--;
                     }
 
                 });
+            });
+        </script>
+        <script>
+            //var count = 1;
+            $(document).on("click", ".remove-attribute-element", function(e) {
+                e.preventDefault();
+                var $wrapper = $(this).closest(".element-wrapper");
+                if ($wrapper.siblings().length > 0) {
+                    $wrapper.remove();
+                }
+                
             });
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

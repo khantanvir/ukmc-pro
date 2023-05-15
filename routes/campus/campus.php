@@ -11,4 +11,5 @@ Route::controller(CampusController::class)->group(function () {
     Route::post('store-campus-data', 'store');
     Route::get('all-campus', 'all');
     Route::get('archived-campus', 'archive');
+    Route::get('edit-campus/{slug?}', 'edit');
 });

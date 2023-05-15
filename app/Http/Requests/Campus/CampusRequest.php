@@ -35,11 +35,6 @@ class CampusRequest extends FormRequest
             'scholarship_policy' => 'required',
             'institute_important_notes' => 'required',
             'institute_logo' => 'required',
-
-            'name.*' => 'required',
-            'email.*' => 'required',
-            'phone.*' => 'required',
-            'alternate_phone.*' => 'nullable',
         ];
     }
 }

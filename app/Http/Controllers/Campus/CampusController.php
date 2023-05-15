@@ -57,6 +57,7 @@ class CampusController extends Controller{
         $campus->lang_requirements = $request->lang_requirements;
         $campus->institute_benifits = $request->institute_benifits;
         $campus->per_time_work_details = $request->per_time_work_details;
+        $campus->scholarship_policy = $request->scholarship_policy;
         $campus->institute_important_notes = $request->institute_important_notes;
         //upload logo
         //update image if exists
@@ -122,10 +123,40 @@ class CampusController extends Controller{
         return redirect('all-campus');
 
     }
-    public function all(){
-        $data['page_title'] = 'Campus / List';
+    //edit campus
+    public function edit($slug=NULL){
+        if(!Auth::check()){
+            Session::flash('error','Login First! Create Campus!');
+            return redirect('login');
+        }
+        //check as super admin
+        if(Auth::user()->role != 'admin'){
+            Session::flash('error','Login as Super Admin Then Create Campus!');
+            return redirect('login');
+        }
+        if(!$slug){
+            Session::flash('error','Campus Url Not Found! Server Error');
+            return redirect('all-campus');
+        }
+        $getCampus = Campus::where('slug',$slug)->first();
+        if(!$getCampus){
+            Session::flash('warning','Campus data Not Found! Server Error');
+            return redirect('all-campus');
+        }
+        $data['page_title'] = 'Campus | Edit';
         $data['campus'] = true;
         $data['campus_all'] = true;
+        $data['campus'] = $getCampus;
+        $data['countries'] = Service::countries();
+        $data['campus_contact_persons'] = CampusContactPerson::where('campus_id',$getCampus->id)->get();
+        return view('campus/edit',$data);
+    }
+    public function all(){
+        $data['page_title'] = 'Campus | List';
+        $data['campus'] = true;
+        $data['campus_all'] = true;
+        $data['campuses'] = Campus::orderBy('id','desc')->paginate(9);
+        $data['campus_id'] = Session::get('campus_id');
         return view('campus/all',$data);
     }
     public function archive(){
