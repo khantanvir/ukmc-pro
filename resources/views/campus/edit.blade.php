@@ -30,7 +30,7 @@
                     </header>
                 </div>
             </div>
-            <form method="post" action="{{ URL::to('store-campus-data') }}" enctype="multipart/form-data">
+            <form method="post" action="{{ URL::to('campus-edit-data-post') }}" enctype="multipart/form-data">
                 @csrf
                 <div id="card_1" class="col-lg-12 layout-spacing layout-top-spacing">
                     <div class="statbox widget box box-shadow">
@@ -51,11 +51,12 @@
                                     </div><br>
                                 </div>
                                 <div class="col">
+                                    <input type="hidden" name="campus_id" value="{{ $campus->id }}" />
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Country*</label>
                                         <select name="country" class="form-control">
                                             <option value="">Select Country</option>
                                             @foreach ($countries as $country)
-                                                <option value="{{ $country }}">{{ $country }}</option>
+                                                <option {{ (!empty($campus->country) && $country)?'selected':'' }} value="{{ $country }}">{{ $country }}</option>
                                             @endforeach
                                         </select>
                                         @if ($errors->has('country'))
@@ -66,7 +67,7 @@
                                 <div class="col">
                                     <div class="form-group mb-2">
                                         <label for="exampleFormControlInput1">Campus Name*</label>
-                                        <input value="{{ old('campus_name') }}" type="text" class="form-control" name="campus_name">
+                                        <input type="text" class="form-control" value="{{ (!empty($campus->campus_name))?$campus->campus_name:old('campus_name') }}" name="campus_name">
                                         @if ($errors->has('campus_name'))
                                             <span class="text-danger">{{ $errors->first('campus_name') }}</span>
                                         @endif
@@ -76,12 +77,12 @@
                             <div class="row mb-2">
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Website</label><input
-                                            type="text" class="form-control" value="{{ old('website') }}" name="website">
+                                            type="text" class="form-control" value="{{ (!empty($campus->website))?$campus->website:old('website') }}" name="website">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Monthly Living Cost*</label>
-                                        <input type="text" class="form-control" value="{{ old('monthly_living_cost') }}" name="monthly_living_cost">
+                                        <input type="text" class="form-control" value="{{ (!empty($campus->monthly_living_cost))?$campus->monthly_living_cost:old('monthly_living_cost') }}" name="monthly_living_cost">
                                         @if ($errors->has('monthly_living_cost'))
                                             <span class="text-danger">{{ $errors->first('monthly_living_cost') }}</span>
                                         @endif
@@ -90,7 +91,7 @@
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Funds Requirements
                                             for Visa*</label><input type="text" class="form-control"
-                                            name="funds_requirements_for_visa" value="{{ old('funds_requirements_for_visa') }}">
+                                            name="funds_requirements_for_visa" value="{{ (!empty($campus->funds_requirements_for_visa))?$campus->funds_requirements_for_visa:old('funds_requirements_for_visa') }}">
                                         @if ($errors->has('funds_requirements_for_visa'))
                                             <span class="text-danger">{{ $errors->first('funds_requirements_for_visa') }}</span>
                                         @endif
@@ -100,7 +101,7 @@
                             <div class="row mb-2">
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Application Fees*</label>
-                                        <input type="text" class="form-control" name="application_fee" value="{{ old('application_fee') }}">
+                                        <input type="text" class="form-control" name="application_fee" value="{{ (!empty($campus->application_fee))?$campus->application_fee:old('application_fee') }}">
                                         @if ($errors->has('application_fee'))
                                             <span class="text-danger">{{ $errors->first('application_fee') }}</span>
                                         @endif
@@ -109,7 +110,7 @@
                                 <div class="col">
                                     <div class="form-group mb-2"><label
                                             for="exampleFormControlInput1">Currency*</label><input type="text"
-                                            class="form-control" name="currency" value="{{ old('currency') }}">
+                                            class="form-control" name="currency" value="{{ (!empty($campus->currency))?$campus->currency:old('currency') }}">
                                         @if ($errors->has('currency'))
                                             <span class="text-danger">{{ $errors->first('currency') }}</span>
                                         @endif
@@ -118,7 +119,7 @@
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Is Language
                                             Mandatory*</label><input type="text" class="form-control"
-                                            placeholder="Yes or No" name="is_lang_mendatory" value="{{ old('is_lang_mendatory') }}">
+                                            placeholder="Yes or No" name="is_lang_mendatory" value="{{ (!empty($campus->is_lang_mendatory))?$campus->is_lang_mendatory:old('is_lang_mendatory') }}">
                                         @if ($errors->has('is_lang_mendatory'))
                                             <span class="text-danger">{{ $errors->first('is_lang_mendatory') }}</span>
                                         @endif
@@ -130,7 +131,7 @@
                                     <div class="form-group mb-2"><label for="exampleFormControlTextarea1">Language
                                             Requirements*</label>
                                         <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="lang_requirements">{{ old('lang_requirements') }}</textarea>
+                                            name="lang_requirements">{{ (!empty($campus->lang_requirements))?$campus->lang_requirements:old('lang_requirements') }}</textarea>
                                         @if ($errors->has('lang_requirements'))
                                             <span class="text-danger">{{ $errors->first('lang_requirements') }}</span>
                                         @endif
@@ -140,7 +141,7 @@
                                     <div class="form-group mb-2"><label for="exampleFormControlTextarea1">Campus
                                             Benifits*</label>
                                         <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="institute_benifits">{{ old('institute_benifits') }}</textarea>
+                                            name="institute_benifits">{{ (!empty($campus->institute_benifits))?$campus->institute_benifits:old('institute_benifits') }}</textarea>
                                         @if ($errors->has('institute_benifits'))
                                             <span class="text-danger">{{ $errors->first('institute_benifits') }}</span>
                                         @endif
@@ -150,7 +151,7 @@
                                     <div class="form-group mb-2"><label for="exampleFormControlTextarea1"> Part Time Work
                                             Details*</label>
                                         <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="per_time_work_details">{{ old('per_time_work_details') }}</textarea>
+                                            name="per_time_work_details">{{ (!empty($campus->per_time_work_details))?$campus->per_time_work_details:old('per_time_work_details') }}</textarea>
                                         @if ($errors->has('per_time_work_details'))
                                             <span class="text-danger">{{ $errors->first('per_time_work_details') }}</span>
                                         @endif
@@ -162,7 +163,7 @@
                                     <div class="form-group mb-2"><label for="exampleFormControlTextarea1">Scholarship
                                             Policy*</label>
                                         <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="scholarship_policy">{{ old('scholarship_policy') }}</textarea>
+                                            name="scholarship_policy">{{ (!empty($campus->scholarship_policy))?$campus->scholarship_policy:old('scholarship_policy') }}</textarea>
                                         @if ($errors->has('scholarship_policy'))
                                             <span class="text-danger">{{ $errors->first('scholarship_policy') }}</span>
                                         @endif
@@ -172,7 +173,7 @@
                                     <div class="form-group mb-2"><label for="exampleFormControlTextarea1"> Campus
                                             Important Notes*</label>
                                         <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="institute_important_notes">{{ old('institute_important_notes') }}</textarea>
+                                            name="institute_important_notes">{{ (!empty($campus->institute_important_notes))?$campus->institute_important_notes:old('institute_important_notes') }}</textarea>
                                         @if ($errors->has('institute_important_notes'))
                                             <span class="text-danger">{{ $errors->first('institute_important_notes') }}</span>
                                         @endif
@@ -183,14 +184,16 @@
                                 <div class="col">
                                     <div class="row d-flex align-items-center">
                                         <div class="col col-md-8">
-                                            <div class="form-group mb-2"><label>Upload Campus Logo*</label><label
+                                            <div class="form-group mb-2"><label>Upload Campus Logo</label><label
                                                     class="custom-file-container__custom-file"><input type="file"
                                                         class="form-control-file" accept="image/*"
                                                         name="institute_logo"></label>
                                                     @if ($errors->has('institute_logo'))
                                                         <span class="text-danger">{{ $errors->first('institute_logo') }}</span>
                                                     @endif
-                                                <div class="custom-file-container__image-preview"></div>
+                                                <div class="custom-file-container__image-preview">
+                                                    <img src="{{ asset($campus->institute_logo) }}" height="66px" width="100px" />
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col col-md-4">
@@ -203,7 +206,13 @@
                                         <div class="col col-md-8">
                                             <div class="form-group mb-2"><label>Campus Prospectus</label><label
                                                     class="custom-file-container__custom-file"><input type="file"
-                                                        class="form-control-file" name="institute_prospectus"></label></div>
+                                                        class="form-control-file" name="institute_prospectus"></label>
+                                                        @if(!empty($campus->institute_prospectus))
+                                                        <div class="custom-file-container__image-preview">
+                                                            <a download href="{{ asset($campus->institute_prospectus) }}">Download Prospectus</a>
+                                                        </div>
+                                                        @endif
+                                                    </div>
                                         </div>
                                     </div>
                                 </div>
@@ -213,7 +222,11 @@
                                             <div class="form-group mb-2"><label>Campus Course Module</label><label
                                                     class="custom-file-container__custom-file"><input type="file"
                                                         class="form-control-file" name="institute_course_pdf"></label>
-                                                <div class="custom-file-container__image-preview"></div>
+                                                        @if(!empty($campus->institute_course_pdf))
+                                                        <div class="custom-file-container__image-preview">
+                                                            <a download href="{{ asset($campus->institute_course_pdf) }}">Download Course PDF</a>
+                                                        </div>
+                                                        @endif
                                             </div>
                                         </div>
                                     </div>
@@ -255,13 +268,13 @@
                                                             <div class="form-group mb-2"><label for="personName">Contact Person
                                                                     Name</label>
                                                                     <input id="personName" value="{{ (!empty($person->name))?$person->name:'' }}" type="text" class="form-control" name="name[]">
-    
+
                                                             </div>
                                                         </div>
                                                         <div class="col col-md-3">
                                                             <div class="form-group mb-2"><label for="email">Email</label><input
                                                                     type="email" class="form-control" value="{{ (!empty($person->email))?$person->email:'' }}" name="email[]">
-    
+
                                                             </div>
                                                         </div>
                                                         <div class="col col-md-3">
@@ -277,7 +290,7 @@
                                                         </div>
                                                         <br><span class="input-group-btn"><button type="button" class="btn btn-danger remove-attribute-element"><i class="glyphicon glyphicon-minus"></i>-</button></span>
                                                     </div>
-                                                </div>  
+                                                </div>
                                                 @empty
                                                 <div class="element-wrapper" >
                                                     <div class="row">
@@ -285,13 +298,13 @@
                                                             <div class="form-group mb-2"><label for="personName">Contact Person
                                                                     Name</label>
                                                                     <input id="personName" type="text" class="form-control" name="name[]">
-    
+
                                                             </div>
                                                         </div>
                                                         <div class="col col-md-3">
                                                             <div class="form-group mb-2"><label for="email">Email</label><input
                                                                     type="email" class="form-control" name="email[]">
-    
+
                                                             </div>
                                                         </div>
                                                         <div class="col col-md-3">
@@ -309,7 +322,7 @@
                                                     </div>
                                                 </div>
                                                 @endforelse
-                                                
+
                                         </div>
 
                                     </div>

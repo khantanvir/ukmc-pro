@@ -12,4 +12,6 @@ Route::controller(CampusController::class)->group(function () {
     Route::get('all-campus', 'all');
     Route::get('archived-campus', 'archive');
     Route::get('edit-campus/{slug?}', 'edit');
+    Route::post('campus-edit-data-post', 'edit_data_post');
+    Route::get('view-campus/{slug?}', 'view_campus');
 });
