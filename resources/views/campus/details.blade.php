@@ -20,8 +20,8 @@
                                 </div>
                                 <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#">Campus</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">All</li>
+                                        <li class="breadcrumb-item"><a href="{{ URL::to('all-campus') }}">Campus List</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">{{ (!empty($campus_data->campus_name))?$campus_data->campus_name:'' }}</li>
                                     </ol>
                                 </nav>
 
@@ -37,7 +37,7 @@
                         <div class="widget-content widget-content-area">
                             <div class="row mb-5">
                                 <div class="col">
-                                    <img class="img-thumnail rounded-circle" src="https://upload.wikimedia.org/wikipedia/en/d/de/National_American_University_seal_-_gold.png" alt="" width="200px">
+                                    <img class="img-thumnail rounded-circle" src="{{ asset($campus_data->institute_logo) }}" alt="" width="200px">
                                 </div>
                                 <div class="col">
                                     <ul class="list-group custom-list-group-branch me-1">
@@ -61,9 +61,10 @@
                             <div class="row mb-4">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                                     <div class="d-flex align-items-start justify-content-between">
-                                        <h4>American University - Details</h4>
+                                        <h4>{{ (!empty($campus_data->campus_name))?$campus_data->campus_name:'' }} - Details</h4>
                                         <div>
-                                            <a href="" class="">
+                                            @if(Auth::user()->role=='admin' || Auth::user()->role=='adminManager')
+                                            <a href="{{ URL::to('edit-campus/'.$campus_data->slug) }}" class="">
                                                 <button class="btn btn-info btn-rounded mb-2 mr-4 inline-flex me-2"> Edit
                                                     Campus
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -72,8 +73,11 @@
                                                         class="feather feather-eye">
                                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                                         <circle cx="12" cy="12" r="3"></circle>
-                                                    </svg></button></a><a href="/Campus" class=""><button
-                                                    class="btn btn-info btn-rounded mb-2 mr-4 inline-flex"> View Campuses
+                                                    </svg></button>
+                                            </a>
+                                            @endif
+                                            <a href="{{ URL::to('all-campus') }}" class="">
+                                                    <button class="btn btn-info btn-rounded mb-2 mr-4 inline-flex"> View Campuses
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -87,39 +91,32 @@
                                     </div><br>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">Represent
-                                            Country</label>
-                                        <h6>United States</h6>
+                                    <div class="form-group mb-6"><label for="exampleFormControlInput1">Country</label>
+                                        <h6>{{ (!empty($campus_data->country))?$campus_data->country:'' }}</h6>
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">Campus
-                                            Name</label>
-                                        <h6>American University</h6>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">Campus Name</label>
-                                        <h6>Washington, DC</h6>
+                                    <div class="form-group mb-6"><label for="exampleFormControlInput1">Campus Name</label>
+                                        <h6>{{ (!empty($campus_data->campus_name))?$campus_data->campus_name:'' }}</h6>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-4">
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlInput1">Website</label>
-                                        <h6>www.american.edu</h6>
+                                        <h6>{{ (!empty($campus_data->website))?$campus_data->website:'' }}</h6>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlInput1">Monthly Living
                                             Cost</label>
-                                        <h6>$1,200 – $1,400</h6>
+                                        <h6>{{ (!empty($campus_data->monthly_living_cost))?$campus_data->monthly_living_cost:'' }}</h6>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlInput1">Funds Requirements
                                             for Visa</label>
-                                        <p>N/A</p>
+                                        <p>{{ (!empty($campus_data->funds_requirements_for_visa))?$campus_data->funds_requirements_for_visa:'' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -127,18 +124,18 @@
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlInput1">Application
                                             Fees</label>
-                                        <h6>N/A</h6>
+                                        <h6>{{ (!empty($campus_data->application_fee))?$campus_data->application_fee:'' }}</h6>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlInput1">Currency</label>
-                                        <h6>USD</h6>
+                                        <h6>{{ (!empty($campus_data->currency))?$campus_data->currency:'' }}</h6>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlInput1">Is Language
                                             Mendatory</label>
-                                        <h6>Yes</h6>
+                                        <h6>{{ (!empty($campus_data->is_lang_mendatory))?$campus_data->is_lang_mendatory:'' }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -146,32 +143,19 @@
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlTextarea1">Language
                                             Requirements</label>
-                                        <p>Official results of one of the following English Proficiency
-                                            Exams are required of international students. We accept the following:
-
-                                            *IELTS, a minimum score of 7.0
-                                            *TOEFL, a minimum score of 100
-                                            *TOEFL Essentials, a minimum score of 100
-                                            *PTE, minimum score of 68
-                                            *DUOLINGO, a minimum score of 120
-                                            Note: Language requirements vary in different courses</p>
+                                        <p>{{ (!empty($campus_data->lang_requirements))?$campus_data->lang_requirements:'' }}</p>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlTextarea1">Campus
                                             Benifits</label>
-                                        <p>American University is a student-centred research institution
-                                            in Washington, DC, with highly-ranked schools and colleges,
-                                            internationally-renowned faculty, and a reputation for creating meaningful
-                                            change in the world. Our students distinguish themselves for their service,
-                                            leadership, and ability to rethink global and domestic challenges and
-                                            opportunities. At AU, passion becomes action;</p>
+                                        <p>{{ (!empty($campus_data->institute_benifits))?$campus_data->institute_benifits:'' }}</p>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlTextarea1"> Part Time Work
                                             Details</label>
-                                        <p>20 hours per week</p>
+                                        <p>{{ (!empty($campus_data->per_time_work_details))?$campus_data->per_time_work_details:'' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -179,27 +163,17 @@
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlTextarea1">Scholarship
                                             Policy</label>
-                                        <p>N/A</p>
+                                        <p>{{ (!empty($campus_data->scholarship_policy))?$campus_data->scholarship_policy:'' }}</p>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlTextarea1"> Campus
                                             Important Notes</label>
-                                        <p>Admission Requirement-
-                                            www.american.edu/sis/admissions/international.cfm</p>
+                                        <p>{{ (!empty($campus_data->institute_important_notes))?$campus_data->institute_important_notes:'' }}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-4">
-                                <div class="col">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col col-md-8">
-                                            <div class="col col-md-4"><img alt="Country Flag"
-                                                    src="https://nwcapi.theleadlibrary.com/backend/images/Campus/1670603662-american-university.png"
-                                                    width="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col">
                                     <div class="row d-flex align-items-center">
                                         <div class="col col-md-8">
@@ -211,7 +185,13 @@
                                                             d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z">
                                                         </path>
                                                         <polyline points="13 2 13 9 20 9"></polyline>
-                                                    </svg></span><label>No Campus Prospectus</label>
+                                                    </svg></span>
+                                                    @if(!empty($campus_data->institute_prospectus))
+                                                    <a download href="{{ URL::to(asset($campus_data->institute_prospectus)) }}">Download Campus Prospectus</a>
+                                                    @else
+                                                    <label>No Campus Prospectus Found</label>
+                                                    @endif
+
                                             </div>
                                         </div>
                                     </div>
@@ -227,7 +207,13 @@
                                                             d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z">
                                                         </path>
                                                         <polyline points="13 2 13 9 20 9"></polyline>
-                                                    </svg></span><label>No Campus Module</label>
+                                                    </svg></span>
+                                                    @if(!empty($campus_data->institute_course_pdf))
+                                                    <a download href="{{ URL::to(asset($campus_data->institute_course_pdf)) }}">Download Course Module</a>
+                                                    @else
+                                                    <label>No Course Module Found</label>
+                                                    @endif
+
                                             </div>
                                         </div>
                                     </div>
@@ -256,12 +242,19 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @forelse($campus_contact_persons as $person)
                                                     <tr>
-                                                        <td>Admisson Adviser</td>
-                                                        <td>casgrad@american.edu</td>
-                                                        <td>2028853620</td>
-                                                        <td>2028853620</td>
+                                                        <td>{{ $person->name }}</td>
+                                                        <td>{{ $person->email }}</td>
+                                                        <td>{{ $person->phone }}</td>
+                                                        <td>{{ $person->alternate_phone }}</td>
                                                     </tr>
+                                                    @empty
+                                                    <tr>
+                                                        <td>No Data Found</td>
+                                                    </tr>
+                                                    @endforelse
+
                                                 </tbody>
                                             </table>
                                         </div>

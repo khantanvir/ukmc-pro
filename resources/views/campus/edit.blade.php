@@ -39,15 +39,14 @@
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                                     <div class="d-flex align-items-start justify-content-between">
                                         <h5>Add Campus Information</h5>
-                                        <a href="/institute" class=""><button
-                                                class="btn btn-info btn-rounded mb-2 mr-4 inline-flex items-center"> View
+                                        <a href="{{ URL::to('all-campus') }}" class="btn btn-info btn-rounded mb-2 mr-4 inline-flex items-center"> View
                                                 Campus <svg xmlns="http://www.w3.org/2000/svg" width="20"
                                                     height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                                     class="feather feather-eye">
                                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                                     <circle cx="12" cy="12" r="3"></circle>
-                                                </svg></button></a>
+                                                </svg></a>
                                     </div><br>
                                 </div>
                                 <div class="col">
@@ -327,9 +326,10 @@
 
                                     </div>
                                     <div class="row mt-5">
-                                        <div class="col"><button type="button" class="btn btn-warning btn-lg me-2">
-                                                Cancel </button><button type="submit" class="btn btn-primary btn-lg mr-2"
-                                                > Submit </button></div>
+                                        <div class="col"><a href="{{ URL::to('all-campus') }}" type="button" class="btn btn-warning btn-lg me-2">
+                                                Cancel </a>
+                                                <button type="submit" class="btn btn-primary btn-lg mr-2"> Submit </button>
+                                            </div>
                                     </div>
                                 </div>
                             </div>

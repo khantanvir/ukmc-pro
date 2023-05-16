@@ -281,9 +281,9 @@
 
                                     </div>
                                     <div class="row mt-5">
-                                        <div class="col"><button type="button" class="btn btn-warning btn-lg me-2">
-                                                Cancel </button><button type="submit" class="btn btn-primary btn-lg mr-2"
-                                                > Submit </button></div>
+                                        <div class="col"><a href="{{ URL::to('all-campus') }}" type="button" class="btn btn-warning btn-lg me-2">
+                                                Cancel </a>
+                                                <button type="submit" class="btn btn-primary btn-lg mr-2"> Submit </button></div>
                                     </div>
                                 </div>
                             </div>

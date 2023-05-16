@@ -35,7 +35,7 @@
                 <div id="card_1" class="col-lg-12 layout-spacing layout-top-spacing">
                     <div class="statbox widget box box-shadow">
                         <div class="widget-content widget-content-area">
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                                     <div class="d-flex align-items-start justify-content-between">
                                         <h5>Company Information</h5>
@@ -54,19 +54,19 @@
                                             @foreach ($countries as $country)
                                                 <option {{ (!empty($company_data->country) && $company_data->country==$country)?'selected':'' }} value="{{ $country }}">{{ $country }}</option>
                                             @endforeach
-                                            
+
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col col-md-7">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Address</label>
                                         <textarea name="address" id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false" name="institute_important_notes">{{ (!empty($company_data->address))?$company_data->address:'' }}</textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col col-md-4">
                                     <div class="form-group mb-2"><label for="personName">State</label>
                                         <input id="state" type="text" class="form-control" value="{{ (!empty($company_data->state))?$company_data->state:'' }}" name="state">
@@ -82,26 +82,28 @@
                                         <input id="zip_code" type="text" class="form-control" value="{{ (!empty($company_data->zip_code))?$company_data->zip_code:'' }}" name="zip_code">
                                     </div>
                                 </div>
-                                
+
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col">
                                     <div class="row d-flex align-items-center">
                                         <div class="col col-md-6">
-                                            <div class="form-group mb-2"><label>Company Logo</label><label
-                                                    class="custom-file-container__custom-file"><input type="file"
+                                            <div class="form-group mb-2">
+                                                <label>Company Logo</label>
+                                                    <input type="file"
                                                         class="form-control-file" accept="image/*"
-                                                        name="company_logo"></label>
+                                                        name="company_logo">
                                                 @if(!empty($company_data->company_logo))
                                                     <img width="160" height="65" src="{{ asset($company_data->company_logo) }}" class="custom-file-container__image-preview"/>
                                                 @endif
                                             </div>
                                         </div>
                                         <div class="col col-md-6">
-                                            <div class="form-group mb-2"><label>Company Logo</label><label
-                                                class="custom-file-container__custom-file"><input type="file"
+                                            <div class="form-group mb-2">
+                                                <label>Company Logo</label>
+                                                <input type="file"
                                                     class="form-control-file" accept="image/*"
-                                                    name="company_banner"></label>
+                                                    name="company_banner">
                                             @if(!empty($company_data->company_banner))
                                                 <img width="250" height="80" src="{{ asset($company_data->company_banner) }}" class="custom-file-container__image-preview"/>
                                             @endif
@@ -110,7 +112,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col col-md-4">
                                     <div class="form-group mb-2"><label for="personName">Email</label>
                                         <input id="email" type="text" class="form-control" value="{{ (!empty($company_data->email))?$company_data->email:'' }}" name="email">
@@ -126,9 +128,9 @@
                                         <input id="website" type="text" class="form-control" value="{{ (!empty($company_data->website))?$company_data->website:'' }}" name="website">
                                     </div>
                                 </div>
-                                
+
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col col-md-6">
                                     <div class="form-group mb-2"><label for="personName">CRM Website</label>
                                         <input id="crm_website" type="text" class="form-control" value="{{ (!empty($company_data->crm_website))?$company_data->crm_website:'' }}" name="crm_website">
@@ -140,7 +142,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col col-md-6">
                                     <div class="form-group mb-2"><label for="personName">Privacy Policy Link</label>
                                         <input id="privacy_policy" type="text" class="form-control" value="{{ (!empty($company_data->privacy_policy))?$company_data->privacy_policy:'' }}" name="privacy_policy">
@@ -152,7 +154,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col col-md-3">
                                     <div class="form-group mb-2"><label for="personName">Facebook</label>
                                         <input id="facebook" type="text" class="form-control" value="{{ (!empty($company_data->facebook))?$company_data->facebook:'' }}" name="facebook">
@@ -174,7 +176,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col col-md-4">
                                     <div class="form-group mb-2"><label for="personName">Pinterest</label>
                                         <input id="pinterest" type="text" class="form-control" value="{{ (!empty($company_data->pinterest))?$company_data->pinterest:'' }}" name="pinterest">
@@ -190,7 +192,7 @@
                                         <input id="whatsapp" type="text" class="form-control" value="{{ (!empty($company_data->whatsapp))?$company_data->whatsapp:'' }}" name="whatsapp">
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -198,12 +200,12 @@
                 <div id="card_1" class="col-lg-12 layout-spacing layout-top-spacing">
                     <div class="statbox widget box box-shadow">
                         <div class="widget-content widget-content-area">
-                            <div class="row mb-2">
+                            <div class="row mb-4 mb-2">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                                     <h4>Contact Person</h4><br>
                                 </div>
                                 <div class="col col-md-12">
-                                    <div class="row">
+                                    <div class="row mb-4">
                                         <div class="col col-md-3">
                                             <div class="form-group mb-2"><label for="personName">Contact Person
                                                     Name</label><input id="contact_person_name" type="text"
@@ -230,7 +232,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row mt-5">
+                                    <div class="row mb-4 mt-5">
                                         <div class="col"><button type="button" class="btn btn-warning btn-lg me-2">
                                                 Cancel </button><button type="submit" class="btn btn-primary btn-lg mr-2"
                                                 > Submit </button></div>

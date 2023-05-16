@@ -14,4 +14,6 @@ Route::controller(CampusController::class)->group(function () {
     Route::get('edit-campus/{slug?}', 'edit');
     Route::post('campus-edit-data-post', 'edit_data_post');
     Route::get('view-campus/{slug?}', 'view_campus');
+    Route::get('delete-campus/{id?}', 'delete_campus');
+    Route::post('campus-change-status', 'change_status');
 });

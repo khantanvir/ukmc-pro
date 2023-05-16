@@ -32,11 +32,12 @@ class CampusController extends Controller{
             Session::flash('error','Login First! Create Campus!');
             return redirect('login');
         }
+        //print_r(Auth::user());
         //check as super admin
-        if(Auth::user()->role != 'admin'){
-            Session::flash('error','Login as Super Admin Then Create Campus!');
-            return redirect('login');
-        }
+        // if(Auth::user()->role !== 'admin' || Auth::user()->role !== 'adminManager'){
+        //     Session::flash('error','Login as Super Admin Then Create Campus!');
+        //     return redirect('login');
+        // }
         $data['page_title'] = 'Campus | Create';
         $data['campus'] = true;
         $data['campus_add'] = true;
@@ -131,10 +132,10 @@ class CampusController extends Controller{
             return redirect('login');
         }
         //check as super admin
-        if(Auth::user()->role != 'admin'){
-            Session::flash('error','Login as Super Admin Then Create Campus!');
-            return redirect('login');
-        }
+        // if(Auth::user()->role != 'admin' || Auth::user()->role != 'adminManager'){
+        //     Session::flash('error','Login as Super Admin Then Create Campus!');
+        //     return redirect('login');
+        // }
         if(!$slug){
             Session::flash('error','Campus Url Not Found! Server Error');
             return redirect('all-campus');
@@ -253,20 +254,58 @@ class CampusController extends Controller{
         $data['campus'] = true;
         $data['campus_all'] = true;
         $data['campus_data'] = Campus::where('slug',$slug)->first();
+        if(!$data['campus_data']){
+            Session::flash('warning','Campus Data Not Found! Server Error!');
+            return redirect('all-campus');
+        }
+        $data['campus_contact_persons'] = CampusContactPerson::where('campus_id',$data['campus_data']->id)->get();
         return view('campus/details',$data);
     }
     public function all(){
         $data['page_title'] = 'Campus | List';
         $data['campus'] = true;
         $data['campus_all'] = true;
-        $data['campuses'] = Campus::orderBy('id','desc')->paginate(9);
+        $data['campuses'] = Campus::where('active',1)->orderBy('id','desc')->paginate(9);
         $data['campus_id'] = Session::get('campus_id');
         return view('campus/all',$data);
     }
     public function archive(){
-        $data['page_title'] = 'Archived / Campus';
+        $data['page_title'] = 'Archive Campus | List';
         $data['campus'] = true;
         $data['campus_archive'] = true;
+        $data['campuses'] = Campus::where('active',0)->orderBy('id','desc')->paginate(9);
+        $data['campus_id'] = Session::get('campus_id');
         return view('campus/archive',$data);
+    }
+    public function change_status(Request $request){
+        $campusData = Campus::where('id',$request->campus_id)->first();
+        if(!$campusData){
+            $data['result'] = array(
+                'key'=>101,
+                'val'=>'Campus Data Not Found! Server Error!'
+            );
+            return response()->json($data,200);
+        }
+        if($campusData->active==1){
+            $update = Campus::where('id',$campusData->id)->update(['active'=>$request->active]);
+        }else{
+            $update = Campus::where('id',$campusData->id)->update(['active'=>$request->active]);
+        }
+        $data['result'] = array(
+            'key'=>200,
+            'val'=>'Status Changed Successfully!'
+        );
+        return response()->json($data,200);
+    }
+    public function delete_campus($id=NULL){
+        $campusData = Campus::where('id',$id)->first();
+        if(!$campusData){
+            Session::flash('warning','Campus Not Found! Server Error!');
+            return redirect('all-campus');
+        }
+        $update = Campus::where('id',$campusData->id)->update(['active'=>0]);
+        Session::put('campus_id',$campusData->id);
+        Session::flash('success','Campus Archived Successfully!');
+        return redirect('all-campus');
     }
 }
