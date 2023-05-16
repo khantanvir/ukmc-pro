@@ -38,7 +38,7 @@
                                             <div class="user-info">
                                                 <div class="d-flex align-items-start justify-content-between pl-4">
                                                     <div class="logo-title-wrap">
-                                                        <img src="{{ URL::to($campus->institute_logo) }}" alt="..." width="100px">
+                                                        <img class="rounded-circle bg-white" src="{{ URL::to($campus->institute_logo) }}" alt="..." width="70px">
                                                     </div>
                                                     <div class="action-wrapd-flex align-items-center justify-content-between">
                                                         <span class="badge badge-pill badge-warning custom-btn-branch me-1">
@@ -63,19 +63,19 @@
                                                         <p class="card-user_occupation">Country: {{ (!empty($campus->country))?$campus->country:'' }}</p>
                                                     </div>
                                                     <ul class="list-group custom-list-group-branch me-1">
-                                                        <li class="d-flex justify-content-between align-items-center">
+                                                        <li class="d-flex justify-content-between align-items-center mb-1">
                                                             <h6 class="count-warning">Total Courses</h6><a href="" class=""><span class="badge badge-warning">0</span></a></li>
-                                                        <li class="d-flex justify-content-between align-items-center">
+                                                        <li class="d-flex justify-content-between align-items-center mb-1">
                                                             <h6 class="count-primary">All Application</h6><span class="badge badge-primary">8</span></li>
-                                                        <li class="d-flex justify-content-between align-items-center">
+                                                        <li class="d-flex justify-content-between align-items-center mb-1">
                                                             <h6 class="count-primary">New Application</h6><span class="badge badge-info">0</span></li>
-                                                        <li class="d-flex justify-content-between align-items-center">
+                                                        <li class="d-flex justify-content-between align-items-center mb-1">
                                                             <h6 class="count-success">Sub-Agent Application</h6><span class="badge badge-secondary">0</span></li>
-                                                        <li class="d-flex justify-content-between align-items-center">
+                                                        <li class="d-flex justify-content-between align-items-center mb-1">
                                                             <h6 class="count-success">Conditional/ Unconditional</h6><span class="badge badge-success">0</span></li>
-                                                        <li class="d-flex justify-content-between align-items-center">
+                                                        <li class="d-flex justify-content-between align-items-center mb-1">
                                                             <h6 class="count-success">Enrolled Students</h6><span class="badge badge-success">0</span></li>
-                                                        <li class="d-flex justify-content-between align-items-center">
+                                                        <li class="d-flex justify-content-between align-items-center mb-1">
                                                             <h6 class="count-danger">Reject Applications</h6><span class="badge badge-danger">0</span></li>
                                                     </ul>
                                                 </div>
@@ -98,9 +98,9 @@
         </div>
     </div>
 </div>
-<style>
+{{-- <style>
     .tr-bg{
-        background: #0b7c6d !important;
+        background: #031735 !important;
     }
-</style>
+</style> --}}
 @stop

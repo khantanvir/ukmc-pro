@@ -71,7 +71,7 @@ class CampusController extends Controller{
             $filename = $campus_logo->getClientOriginalName();
             $filename = Service::slug_create($filename).rand(1100, 99999).'.'.$ext;
             $image_resize = Image::make($campus_logo->getRealPath());
-            $image_resize->resize(100, 66);
+            $image_resize->resize(200, 200);
             $upload_path = 'backend/images/campus/campus_logo/';
             Service::createDirectory($upload_path);
             $image_resize->save(public_path('backend/images/campus/campus_logo/'.$filename));
@@ -183,7 +183,7 @@ class CampusController extends Controller{
             $filename = $campus_logo->getClientOriginalName();
             $filename = Service::slug_create($filename).rand(1100, 99999).'.'.$ext;
             $image_resize = Image::make($campus_logo->getRealPath());
-            $image_resize->resize(100, 66);
+            $image_resize->resize(200, 200);
             $upload_path = 'backend/images/campus/campus_logo/';
             Service::createDirectory($upload_path);
             $image_resize->save(public_path('backend/images/campus/campus_logo/'.$filename));

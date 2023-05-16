@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -12,4 +12,5 @@ Route::controller(ApplicationController::class)->group(function () {
     Route::get('ongoing-applications', 'ongoing');
     Route::get('enrolled-students', 'enrolled');
     Route::get('archive-students', 'archive_students');
+    Route::get('application-details', 'application_details');
 });

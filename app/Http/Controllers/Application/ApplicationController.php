@@ -39,4 +39,10 @@ class ApplicationController extends Controller
         $data['application_archived'] = true;
         return view('application/archived',$data);
     }
+    public function application_details(){
+        $data['page_title'] = 'Application | Details';
+        $data['application'] = true;
+        $data['application_all'] = true;
+        return view('application/details',$data);
+    }
 }
