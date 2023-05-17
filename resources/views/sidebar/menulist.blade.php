@@ -68,7 +68,7 @@
                 </div>
             </a>
             <ul class="{{ (!empty($campus) && $campus==true)?'collapse show':'collapse' }} submenu list-unstyled" id="datatables2" data-bs-parent="#accordionExample">
-                @if(Auth::check() && Auth::user()->role=='admin' || Auth::user()->role=='adminManager')
+                @if(Auth::check() && Auth::user()->role=='admin')
                 <li class="{{ (!empty($campus_add) && $campus_add==true)?'active':'' }}">
                     <a href="{{ URL::to('campus-create') }}"> Add Campus</a>
                 </li>
@@ -78,7 +78,7 @@
                     <a href="{{ URL::to('all-campus') }}"> All Campus </a>
                 </li>
                 @endif
-                @if(Auth::check() && Auth::user()->role=='admin' || Auth::user()->role=='adminManager')
+                @if(Auth::check() && Auth::user()->role=='admin')
                 <li class="{{ (!empty($campus_archive) && $campus_archive==true)?'active':'' }}">
                     <a href="{{ URL::to('archived-campus') }}"> Archive Campus </a>
                 </li>

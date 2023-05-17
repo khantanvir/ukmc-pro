@@ -63,7 +63,7 @@
                                     <div class="d-flex align-items-start justify-content-between">
                                         <h4>{{ (!empty($campus_data->campus_name))?$campus_data->campus_name:'' }} - Details</h4>
                                         <div>
-                                            @if(Auth::user()->role=='admin' || Auth::user()->role=='adminManager')
+                                            @if(Auth::user()->role=='admin')
                                             <a href="{{ URL::to('edit-campus/'.$campus_data->slug) }}" class="">
                                                 <button class="btn btn-info btn-rounded mb-2 mr-4 inline-flex me-2"> Edit
                                                     Campus

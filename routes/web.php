@@ -8,14 +8,12 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Task\TaskController;
 use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\Login\LoginController;
+use App\Http\Controllers\User\UserController;
 
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('login', 'login');
-    Route::get('user-list', 'user_list');
-    Route::get('create-teacher', 'create_teacher');
-    Route::get('create-admission-manager', 'create_admission_manager');
 });
 Route::controller(TaskController::class)->group(function () {
     Route::get('task-create', 'create');
@@ -42,4 +40,11 @@ Route::get('test', function () {
     AddNewLead::dispatch('Hello this is test');
     //event(new AddNewLead('hello world'));
     return "Event has been sent!";
+});
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('user-list', 'user_list');
+    Route::get('create-teacher', 'create_teacher');
+    Route::get('create-admission-manager', 'create_admission_manager');
+    Route::post('create-admission-manager-post-data', 'create_admission_manager_post_data');
 });

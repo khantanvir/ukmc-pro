@@ -34,23 +34,10 @@ class HomeController extends Controller{
         $data['dashboard'] = true;
         return view('dashboard/index',$data);
     }
-    public function user_list(){
-        $data['page_title'] = 'User Management';
-        $data['usermanagement'] = true;
-        return view('users/list',$data);
-    }
+    
     public function login(){
         $data['page_title'] = 'User | Login';
         return view('authpanel/login',$data);
     }
-    public function create_teacher(){
-        $data['page_title'] = 'User | Create Teacher';
-        $data['usermanagement'] = true;
-        return view('users/create_teacher',$data);
-    }
-    public function create_admission_manager(){
-        $data['page_title'] = 'User | Create Admission Manager';
-        $data['usermanagement'] = true;
-        return view('users/create_admiossion_manager',$data);
-    }
+
 }
