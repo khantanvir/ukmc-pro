@@ -37,6 +37,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/src/plugins/css/dark/stepper/custom-bsStepper.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/src/assets/css/light/forms/switches.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css" integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('web/css/custom.css') }}">
     <!--  END CUSTOM STYLE FILE  -->
 
 
@@ -165,7 +166,7 @@
                                 @if(Auth::check() && !empty(Auth::user()->photo))
                                 <img alt="avatar" src="{{ asset(Auth::user()->photo) }}" class="rounded-circle">
                                 @else
-                                <img alt="avatar" src="https://devriazul.fastitbd.com/images/devriazul.jpg" class="rounded-circle">
+                                <img alt="avatar" src="{{ asset('web/avatar/user.png') }}" class="rounded-circle">
                                 @endif
 
                             </div>
@@ -332,18 +333,7 @@
 			}
 		});
 		</script>
-        <script>
-            $(document).ready(function(){
-                getAttributeData();
-            });
-        </script>
-        <script>
-            function getAttributeData(){
-				$.get("https://staging-api.theleadlibrary.com/api/v1/get-country-list",function(data,status){
-					console.log(data);
-				});
-			}
-        </script>
+
         <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
         <script>
 
@@ -414,6 +404,7 @@
 				});
 			});
         </script>
+        <script src="{{ asset('web/js/custom.js') }}"></script>
         <script type="text/javascript">
             $(document).ready(function() {
                 //e.preventDefault();

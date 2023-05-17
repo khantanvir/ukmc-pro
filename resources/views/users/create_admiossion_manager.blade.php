@@ -38,16 +38,16 @@
                             <div class="row mb-4">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                                     <div class="d-flex align-items-start justify-content-between">
-                                        <h4>Admission Officer Information</h4><a href="/Officers" class=""><button
-                                                class="btn btn-info btn-rounded mb-2 mr-4 inline-flex items-center"> View
-                                                Officers <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                    height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-eye">
-                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                    <circle cx="12" cy="12" r="3">
-                                                    </circle>
-                                                </svg></button></a>
+                                        <h4>Admission Officer Information</h4>
+                                        <a href="{{ URL::to('user-list') }}" class="btn btn-info btn-rounded mb-2 mr-4 inline-flex items-center"> User
+                                            List <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-eye">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3">
+                                                </circle>
+                                            </svg></a>
                                     </div><br>
                                 </div>
                                 <div class="col">

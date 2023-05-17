@@ -23,6 +23,8 @@ use App\Traits\Service;
 use App\Models\Campus\Campus;
 use App\Models\Admission\AdmissionOfficer;
 use Intervention\Image\Facades\Image;
+use App\Models\Teacher\Teacher;
+use App\Http\Requests\Teacher\TeacherCreateRequest;
 
 class UserController extends Controller{
     use Service;
@@ -30,11 +32,18 @@ class UserController extends Controller{
     public function user_list(){
         $data['page_title'] = 'User Management';
         $data['usermanagement'] = true;
+        $getUserId = Session::get('saved_user_id');
+        $data['return_user_id'] = $getUserId;
+        $data['user_list_data'] = User::where('id','!=',Auth::user()->id)->where('role','!=','agent')->where('role','!=','subAgent')->orderBy('id','desc')->paginate(1);
+        Session::forget('saved_user_id');
+        Session::put('current_url',URL::full());
         return view('users/list',$data);
     }
     public function create_teacher(){
         $data['page_title'] = 'User | Create Teacher';
         $data['usermanagement'] = true;
+        $data['get_campuses'] = Campus::where('active',1)->get();
+        $data['countries'] = Service::countries();
         return view('users/create_teacher',$data);
     }
     public function create_admission_manager(){
@@ -66,6 +75,8 @@ class UserController extends Controller{
         $user->last_name = $last_name;
         $user->role = 'adminManager';
         $user->email = $request->email;
+        $user->phone = $request->officer_phone;
+        $user->slug = Str::slug($request->name,'-');
         //photo upload
         $photo = $request->photo;
         if ($request->hasFile('photo')) {
@@ -99,8 +110,102 @@ class UserController extends Controller{
         $officer->city = $request->city;
         $officer->address = $request->address;
         $officer->save();
+        Session::put('saved_user_id',$user->id);
         Session::flash('success','Admission Officer Created Successfully');
-        return redirect('user-list');
+        if(!empty(Session::get('current_url'))){
+            return redirect(Session::get('current_url'));
+        }else{
+            return redirect('user-list');
+        }
 
+    }
+    //create teacher
+    public function create_teacher_post_data(TeacherCreateRequest $request){
+        //first create user
+        $first_name = "";
+        $last_name = "";
+        $user = new User();
+        $user->name = $request->name;
+        if($user->name){
+            $array = explode(" ",$user->name);
+            foreach($array as $key=>$row){
+                if($key==0){
+                    $first_name = $row;
+                }
+                if(!empty($row) && $key != 0){
+                    $last_name .= $row.' ';
+                }
+            }
+        }
+        $user->first_name = $first_name;
+        $user->last_name = $last_name;
+        $user->role = 'teacher';
+        $user->email = $request->email;
+        $user->phone = $request->teacher_phone;
+        $user->slug = Str::slug($request->name,'-');
+        //photo upload
+        $photo = $request->photo;
+        if ($request->hasFile('photo')) {
+            // if (File::exists(public_path('backend/images/company_logo/'.$company->company_logo))) {
+            //     File::delete(public_path('backend/images/company_logo/'.$company->company_logo));
+            // }
+            $ext = $photo->getClientOriginalExtension();
+            $filename = $photo->getClientOriginalName();
+            $filename = Service::slug_create($filename).rand(1100, 99999).'.'.$ext;
+            $image_resize = Image::make($photo->getRealPath());
+            $image_resize->resize(200, 200);
+            $upload_path = 'backend/images/users/teacher/';
+            Service::createDirectory($upload_path);
+            $image_resize->save(public_path('backend/images/users/teacher/'.$filename));
+            $user->photo = 'backend/images/users/teacher/'.$filename;
+        }
+        $user->password = Hash::make($request->password);
+        $user->save();
+        //create admission officer now
+        $teacher = new Teacher();
+        $teacher->campus_id = $request->campus_id;
+        $teacher->user_id = $user->id;
+        $teacher->teacher_name = $request->teacher_name;
+        $teacher->teacher_phone = $request->teacher_phone;
+        $teacher->teacher_email = $request->teacher_email;
+        $teacher->teacher_alternative_contact = $request->teacher_alternative_contact;
+        $teacher->teacher_nid_or_passport = $request->teacher_nid_or_passport;
+        $teacher->nationality = $request->nationality;
+        $teacher->country = $request->country;
+        $teacher->state = $request->state;
+        $teacher->city = $request->city;
+        $teacher->address = $request->address;
+        $teacher->save();
+        Session::put('saved_user_id',$user->id);
+        Session::flash('success','Successfully Saved Teacher Information!');
+        if(!empty(Session::get('current_url'))){
+            return redirect(Session::get('current_url'));
+        }else{
+            return redirect('user-list');
+        }
+    }
+    //user status change
+    public function user_status_chnage(Request $request){
+        $userData = User::where('id',$request->user_id)->first();
+        if(!$userData){
+            $data['result'] = array(
+                'key'=>101,
+                'val'=>'User Data Not Found! Server Error!'
+            );
+            return response()->json($data,200);
+        }
+        $msg = '';
+        if($userData->active==1){
+            $update = User::where('id',$userData->id)->update(['active'=>$request->active]);
+            $msg = 'User Deactivated';
+        }else{
+            $update = User::where('id',$userData->id)->update(['active'=>$request->active]);
+            $msg = 'User Activated';
+        }
+        $data['result'] = array(
+            'key'=>200,
+            'val'=>$msg
+        );
+        return response()->json($data,200);
     }
 }

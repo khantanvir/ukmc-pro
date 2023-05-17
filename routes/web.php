@@ -47,4 +47,6 @@ Route::controller(UserController::class)->group(function () {
     Route::get('create-teacher', 'create_teacher');
     Route::get('create-admission-manager', 'create_admission_manager');
     Route::post('create-admission-manager-post-data', 'create_admission_manager_post_data');
+    Route::post('create-teacher-post-data', 'create_teacher_post_data');
+    Route::post('user-status-chnage', 'user_status_chnage');
 });
