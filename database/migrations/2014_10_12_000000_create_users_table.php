@@ -22,6 +22,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->string('role')->nullable();
             $table->text('slug')->nullable();
+            $table->integer('company_id')->nullable();
+            $table->tinyInteger('is_admin')->default(0)->nullable();
             $table->string('phone')->nullable();
             $table->string('photo')->nullable();
             $table->string('country')->nullable();

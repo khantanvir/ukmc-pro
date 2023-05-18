@@ -39,3 +39,8 @@ $(function(){
 
     });
 });
+
+function getRoleData(id){
+    var user_id = $('#user_id').val(id);
+    var role_id = $('.get-roll-data'+id).data('id');
+}

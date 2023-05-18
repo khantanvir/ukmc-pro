@@ -50,4 +50,9 @@ Route::controller(UserController::class)->group(function () {
     Route::post('create-teacher-post-data', 'create_teacher_post_data');
     Route::post('user-status-chnage', 'user_status_chnage');
     Route::get('reset-user-list', 'reset_user_list')->name('reset_user_list');
+    Route::post('user-role-confirm', 'user_role_confirm');
+    Route::get('edit-teacher/{slug?}', 'edit_teacher');
+    Route::get('edit-admission-manager/{slug?}', 'edit_admission_manager');
+    Route::post('edit-teacher-data-post', 'edit_teacher_data_post');
+    Route::post('edit-officer-data-post', 'edit_officer_data_post');
 });
