@@ -102,9 +102,4 @@
         </div>
     </div>
 </div>
-<style>
-    .tr-bg{
-        background: #657a9b !important;
-    }
-</style>
 @stop

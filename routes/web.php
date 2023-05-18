@@ -49,4 +49,5 @@ Route::controller(UserController::class)->group(function () {
     Route::post('create-admission-manager-post-data', 'create_admission_manager_post_data');
     Route::post('create-teacher-post-data', 'create_teacher_post_data');
     Route::post('user-status-chnage', 'user_status_chnage');
+    Route::get('reset-user-list', 'reset_user_list')->name('reset_user_list');
 });

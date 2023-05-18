@@ -26,24 +26,24 @@
         </div>
         <h5 class="p-3">User List</h5>
         <div class="widget-content widget-content-area">
-            <form>
+            <form method="get" action="">
                  <div class="row mb-4">
                      <div class="col-4">
-                        <select class="form-control">
-                            <option>Select Role</option>
-                            <option>Admin</option>
-                            <option>Admission Manager</option>
-                            <option>Teacher</option>
+                        <select name="role" class="form-control">
+                            <option value="">Select Role</option>
+                            @foreach ($role_list as $row)
+                                <option {{ (!empty($get_role) && $get_role==$row['key'])?'selected':'' }} value="{{ $row['key'] }}">{{ $row['val'] }}</option>
+                            @endforeach
                         </select>
                      </div>
                      <div class="col-4">
-                         <input type="text" class="form-control" placeholder="Enter Name">
+                         <input value="{{ (!empty($get_name))?$get_name:'' }}" name="name" type="text" class="form-control" placeholder="Enter Name">
                      </div>
                      <div class="col-1">
                         <input type="submit" value="Filter" name="time" class="btn btn-warning">
                      </div>
                      <div class="col">
-                        <input type="submit" value="Reset" name="time" class="btn btn-danger">
+                        <a href="{{ route('reset_user_list') }}" class="btn btn-danger">Reset</a>
                      </div>
                      <div class="col">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">

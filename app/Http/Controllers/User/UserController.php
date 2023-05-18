@@ -29,15 +29,48 @@ use App\Http\Requests\Teacher\TeacherCreateRequest;
 class UserController extends Controller{
     use Service;
     //
-    public function user_list(){
+    public function user_list(Request $request){
         $data['page_title'] = 'User Management';
         $data['usermanagement'] = true;
         $getUserId = Session::get('saved_user_id');
         $data['return_user_id'] = $getUserId;
-        $data['user_list_data'] = User::where('id','!=',Auth::user()->id)->where('role','!=','agent')->where('role','!=','subAgent')->orderBy('id','desc')->paginate(1);
+
+        //work on search option
+        $role = $request->get('role');
+        $name = $request->get('name');
+        Session::put('get_role',$role);
+        Session::put('get_name',$name);
+        //query 
+        $data['user_list_data'] = User::query()
+        ->when($name, function ($query, $name) {
+            return $query->where('name', 'like', '%' . $name . '%');
+        })
+        ->when($role, function ($query, $role) {
+            return $query->where('role', $role);
+        })
+        ->where('id','!=',Auth::user()->id)
+        ->where('role','!=','agent')
+        ->orderBy('id','desc')
+        ->paginate(2)
+        ->appends([
+            'name' => $name,
+            'role' => $role,
+        ]);
+
+        $data['get_role'] = Session::get('get_role');
+        $data['get_name'] = Session::get('get_name');
+        $data['role_list'] = Service::get_roles();
+        
         Session::forget('saved_user_id');
         Session::put('current_url',URL::full());
         return view('users/list',$data);
+    }
+    public function reset_user_list(){
+        Session::forget('saved_user_id');
+        Session::forget('current_url');
+        Session::forget('get_role');
+        Session::forget('get_name');
+        return redirect('user-list');
     }
     public function create_teacher(){
         $data['page_title'] = 'User | Create Teacher';
