@@ -20,6 +20,8 @@ class UserSeeder extends Seeder
             'name' => 'admin admin',
             'email' => 'admin@admin.com',
             'role'=>'admin',
+            'slug'=>'admin-admin',
+            'photo'=>'web/avatar/user.png',
             'active'=>1,
             'password' => Hash::make('12345678'),
         ]);
