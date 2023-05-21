@@ -185,7 +185,7 @@
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">Agreement Expire Date</label>
+                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">Agreement Expire Date*</label>
                                         <input name="agreement_expire_date" type="date" class="form-control">
                                         @if ($errors->has('agreement_expire_date'))
                                             <span class="text-danger">{{ $errors->first('agreement_expire_date') }}</span>
@@ -317,7 +317,7 @@
                             <div class="row mb-4 d-flex align-items-center">
                                 <div class="col col-md-6">
                                     <div class="form-group mb-4"><label for="exampleFormControlTextarea1">Address in
-                                            Details</label>
+                                            Details*</label>
                                         <textarea name="agent_address" id="exampleFormControlTextarea1" class="form-control" rows="2" spellcheck="false">{{ old('agent_address') }}</textarea>
                                         @if ($errors->has('agent_address'))
                                             <span class="text-danger">{{ $errors->first('agent_address') }}</span>
