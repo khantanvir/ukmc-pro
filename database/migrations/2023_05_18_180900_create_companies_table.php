@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->string('agreement_title')->nullable();
             $table->text('agreement_doc_file')->nullable();
-            $table->text('agreement_expire_date')->nullable();
+            $table->timestamp('agreement_expire_date')->nullable();
             $table->timestamps();
         });
     }
