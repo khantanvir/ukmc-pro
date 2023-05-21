@@ -12,4 +12,5 @@ Route::controller(CourseController::class)->group(function () {
     Route::get('archived-courses', 'archive');
     Route::get('course-categories', 'course_categories');
     Route::get('course-levels', 'course_levels');
+    Route::get('course-details/{slug?}', 'course_details');
 });

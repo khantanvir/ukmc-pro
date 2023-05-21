@@ -37,4 +37,10 @@ class CourseController extends Controller
         $data['course_levels'] = true;
         return view('course/levels',$data);
     }
+    public function course_details($slug=NULL){
+        $data['page_title'] = 'Course | Details';
+        $data['course'] = true;
+        $data['course_all'] = true;
+        return view('course/details',$data);
+    }
 }

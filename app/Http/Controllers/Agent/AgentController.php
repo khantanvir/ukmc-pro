@@ -18,4 +18,9 @@ class AgentController extends Controller
         $data['agent'] = true;
         return view('agent/create_agent',$data);
     }
+    public function agent_details(){
+        $data['page_title'] = 'Agents | Details';
+        $data['agent'] = true;
+        return view('agent/details',$data);
+    }
 }
