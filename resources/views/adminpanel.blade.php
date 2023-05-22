@@ -64,7 +64,7 @@
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
                     <a href="#">
-                        <img src="{{ asset('backend/src/assets/img/logo.svg') }}" class="navbar-logo" alt="logo">
+                        <img src="{{ asset('backend/images/company_logo/dummy-logo.jpg') }}" class="navbar-logo" alt="logo">
                     </a>
                 </li>
                 <li class="nav-item theme-text">

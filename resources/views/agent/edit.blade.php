@@ -42,7 +42,7 @@
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlInput1">Company
                                             Name*</label>
-                                            <input name="company_name" value="{{ old('company_name') }}" type="text" class="form-control">
+                                            <input name="company_name" value="{{ (!empty($company_data->company_name))?$company_data->company_name:old('company_name') }}" type="text" class="form-control">
                                             @if ($errors->has('company_name'))
                                                 <span class="text-danger">{{ $errors->first('company_name') }}</span>
                                             @endif
@@ -52,7 +52,7 @@
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlInput1">Company Registration
                                             Number*</label>
-                                            <input value="{{ old('company_registration_number') }}" name="company_registration_number" type="text" class="form-control">
+                                            <input value="{{ (!empty($company_data->company_registration_number))?$company_data->company_registration_number:old('company_registration_number') }}" name="company_registration_number" type="text" class="form-control">
                                             @if ($errors->has('company_registration_number'))
                                                 <span class="text-danger">{{ $errors->first('company_registration_number') }}</span>
                                             @endif
@@ -62,7 +62,7 @@
                                 <div class="col">
                                     <div class="form-group mb-4"><label for="exampleFormControlInput1">Company Establish
                                             Date*</label>
-                                            <input name="company_establish_date" value="{{ old('company_establish_date') }}" type="date" class="form-control">
+                                            <input name="company_establish_date" value="{{ (!empty($company_data->company_establish_date))?$company_data->company_establish_date:old('company_establish_date') }}" type="date" class="form-control">
                                             @if ($errors->has('company_establish_date'))
                                                 <span class="text-danger">{{ $errors->first('company_establish_date') }}</span>
                                             @endif
@@ -209,194 +209,6 @@
                 <div id="card_1" class="col-lg-12 layout-spacing layout-top-spacing">
                     <div class="statbox widget box box-shadow">
                         <div class="widget-content widget-content-area">
-                            <div class="row mb-4">
-                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <div class="d-flex align-items-start justify-content-between">
-                                        <h4>New Agent Information</h4>
-                                    </div><br>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">Agent
-                                            Name*</label>
-                                            <input name="agent_name" value="{{ old('agent_name') }}" type="text" class="form-control">
-                                            @if ($errors->has('agent_name'))
-                                                <span class="text-danger">{{ $errors->first('agent_name') }}</span>
-                                            @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">Agent
-                                            Phone*</label>
-                                            <input name="agent_phone" value="{{ old('agent_phone') }}" type="text" class="form-control">
-                                            @if ($errors->has('agent_phone'))
-                                                <span class="text-danger">{{ $errors->first('agent_phone') }}</span>
-                                            @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">Agent
-                                            Email*</label>
-                                            <input name="agent_email" value="{{ old('agent_email') }}" type="email" class="form-control">
-                                            @if ($errors->has('agent_email'))
-                                                <span class="text-danger">{{ $errors->first('agent_email') }}</span>
-                                            @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">Alternative Person
-                                            Contact</label>
-                                            <input name="alternative_person_contact" value="{{ old('alternative_person_contact') }}" type="text" class="form-control">
-
-                                        <!---->
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">NID or Passport
-                                            Number*</label>
-                                            <input name="nid_or_passport" value="{{ old('nid_or_passport') }}" type="text" class="form-control">
-                                            @if ($errors->has('nid_or_passport'))
-                                                <span class="text-danger">{{ $errors->first('nid_or_passport') }}</span>
-                                            @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label
-                                            for="exampleFormControlInput1">Nationality*</label>
-                                            <input type="text" value="{{ old('nationality') }}" name="nationality" class="form-control">
-                                            @if ($errors->has('nationality'))
-                                                <span class="text-danger">{{ $errors->first('nationality') }}</span>
-                                            @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col">
-                                    <div class="form-group mb-4"><label
-                                            for="exampleFormControlInput1">Country*</label>
-                                            <select name="agent_country" class="form-control">
-                                            <option value="">Select Country
-                                            </option>
-                                            @foreach ($countries as $country)
-                                            <option value="{{ $country }}">{{ $country }}</option>
-                                            @endforeach
-
-                                        </select>
-                                        @if ($errors->has('agent_country'))
-                                            <span class="text-danger">{{ $errors->first('agent_country') }}</span>
-                                        @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">State*</label>
-                                        <input name="agent_state" value="{{ old('agent_state') }}" type="text" class="form-control">
-                                        @if ($errors->has('agent_state'))
-                                            <span class="text-danger">{{ $errors->first('agent_state') }}</span>
-                                        @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">City*</label>
-                                        <input name="agent_city" value="{{ old('agent_city') }}" type="text" class="form-control">
-                                        @if ($errors->has('agent_city'))
-                                            <span class="text-danger">{{ $errors->first('agent_city') }}</span>
-                                        @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="exampleFormControlInput1">Zip Code*</label>
-                                        <input name="agent_zip_code" value="{{ old('agent_zip_code') }}" type="text" class="form-control">
-                                        @if ($errors->has('agent_zip_code'))
-                                            <span class="text-danger">{{ $errors->first('agent_zip_code') }}</span>
-                                        @endif
-                                        <!---->
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row mb-4 d-flex align-items-center">
-                                <div class="col col-md-6">
-                                    <div class="form-group mb-4"><label for="exampleFormControlTextarea1">Address in
-                                            Details*</label>
-                                        <textarea name="agent_address" id="exampleFormControlTextarea1" class="form-control" rows="2" spellcheck="false">{{ old('agent_address') }}</textarea>
-                                        @if ($errors->has('agent_address'))
-                                            <span class="text-danger">{{ $errors->first('agent_address') }}</span>
-                                        @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                                <div class="col col-md-4">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col col-md-8">
-                                            <div class="form-group mb-4"><label>Upload Agent Picture</label><label
-                                                    class="custom-file-container__custom-file">
-                                                    <input type="file" name="image" class="form-control-file" accept="image/*"></label>
-                                                <div class="custom-file-container__image-preview">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col col-md-4">
-                                            <!---->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="card_1" class="col-lg-12 layout-spacing layout-top-spacing">
-                    <div class="statbox widget box box-shadow">
-                        <div class="widget-content widget-content-area">
-                            <div class="row mb-4">
-                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Agent Login Information</h4><br>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="personName">Person Name*</label>
-                                        <input name="name" value="{{ old('name') }}" id="personName" type="text" class="form-control">
-                                        @if ($errors->has('name'))
-                                            <span class="text-danger">{{ $errors->first('name') }}</span>
-                                        @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="email">Email*</label>
-                                        <input type="email" name="email" value="{{ old('email') }}" class="form-control">
-                                        @if ($errors->has('email'))
-                                            <span class="text-danger">{{ $errors->first('email') }}</span>
-                                        @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="password">Password*</label>
-                                        <input name="password" type="password" class="form-control">
-                                        @if ($errors->has('password'))
-                                            <span class="text-danger">{{ $errors->first('password') }}</span>
-                                        @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-4"><label for="password">Confirm Password*</label>
-                                        <input name="password_confirmation" type="password" class="form-control">
-                                        @if ($errors->has('password_confirmation'))
-                                            <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
-                                        @endif
-                                        <!---->
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col text-right">
                                     <div class="row">

@@ -25,9 +25,11 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('zip_code')->nullable();
             $table->text('address')->nullable();
+            $table->text('company_logo')->nullable();
             $table->string('agreement_title')->nullable();
             $table->text('agreement_doc_file')->nullable();
             $table->timestamp('agreement_expire_date')->nullable();
+            $table->tinyInteger('status')->nullable()->default(1);
             $table->timestamps();
         });
     }

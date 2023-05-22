@@ -10,4 +10,8 @@ Route::controller(AgentController::class)->group(function () {
     Route::get('agents', 'agents');
     Route::get('create-agent', 'create_agent');
     Route::get('agent-details', 'agent_details');
+    Route::post('create-agent-post-data', 'create_agent_post_data');
+    Route::post('company-status-chnage', 'company_status_change');
+    Route::get('reset-company-list','reset_company_list');
+    Route::get('company/{id?}/edit','edit_company');
 });

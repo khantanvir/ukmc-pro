@@ -20,8 +20,8 @@
                                 </div>
                                 <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#">Application</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Create</li>
+                                        <li class="breadcrumb-item"><a href="#">Agent Company</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">All</li>
                                     </ol>
                                 </nav>
 
@@ -30,29 +30,22 @@
                     </header>
                 </div>
             </div>
-            <h5 class="p-3">Agent List</h5>
+            <h5 class="p-3">Company List</h5>
             <div class="widget-content widget-content-area">
-                <form>
-                    <div class="row mb-4">
-                        <div class="col-4">
-                            <select class="form-control">
-                                <option>Select Agent Company</option>
-                                <option>Oxford International</option>
-                                <option>HEC UK</option>
-                                <option>NWC</option>
-                            </select>
-                        </div>
-                        <div class="col-4">
-                            <input type="text" class="form-control" placeholder="Enter Name">
+                <form method="get" action="">
+                    <div class="row">
+
+                        <div class="col-6">
+                            <input type="text" value="{{ (!empty($get_company_name))?$get_company_name:'' }}" name="company_name" class="form-control" placeholder="Enter Company Name">
                         </div>
                         <div class="col-1">
-                            <input type="submit" value="Filter" name="time" class="btn btn-warning">
+                            <input type="submit" value="Filter" name="name-list" class="btn btn-warning">
                         </div>
-                        <div class="col">
-                            <input type="submit" value="Reset" name="time" class="btn btn-danger">
+                        <div class="col-1">
+                            <a class="btn btn-danger" href="{{ URL::to('reset-company-list') }}">Reset</a>
                         </div>
-                        <div class="col">
-                            <a class="btn btn-secondary" href="{{ URL::to('create-agent') }}">+ Add Agent</a>
+                        <div class="col-4">
+                            <a style="float: right;" class="btn btn-secondary" href="{{ URL::to('create-agent') }}">+ Add Agent</a>
                         </div>
                     </div>
                 </form>
@@ -65,42 +58,48 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Name</th>
+                                        <th scope="col">Company Name</th>
                                         <th scope="col">Phone</th>
-                                        <th scope="col">Role</th>
+                                        <th scope="col">Number Of Employee</th>
                                         <th class="text-center" scope="col">Status</th>
                                         <th class="text-center" scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    @forelse ($companies as $company)
+                                    <tr class="{{ (!empty($company_id) && $company_id==$company->id)?'tr-bg':'' }}">
                                         <td>
                                             <div class="media">
                                                 <div class="avatar me-2">
+                                                    @if(!empty($company->company_logo))
                                                     <img alt="avatar"
-                                                        src="{{ asset('backend/src/assets/img/profile-7.jpeg') }}"
+                                                        src="{{ asset($company->company_logo) }}"
                                                         class="rounded-circle" />
+                                                    @else
+                                                    <img alt="avatar"
+                                                        src="{{ asset('backend/images/company_logo/dummy-logo.jpg') }}"
+                                                        class="rounded-circle" />
+                                                    @endif
                                                 </div>
                                                 <div class="media-body align-self-center">
-                                                    <h6 class="mb-0">Shaun Park</h6>
-                                                    <span>shaun.park@mail.com</span>
+                                                    <h6 class="mb-0">{{ $company->company_name }}</h6>
+                                                    <span>{{ $company->company_email }}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            4446464646456
+                                            {{ $company->company_phone }}
                                         </td>
                                         <td>
-                                            <p class="mb-0">CEO</p>
-                                            <span class="text-success">Management</span>
+                                            <span class="text-success">{{ $company->users->count() }}</span>
                                         </td>
                                         <td class="text-center">
                                             <div
                                                 class="switch form-switch-custom switch-inline form-switch-primary form-switch-custom inner-text-toggle">
                                                 <div class="input-checkbox">
                                                     <span class="switch-chk-label label-left">On</span>
-                                                    <input class="switch-input" type="checkbox" role="switch"
-                                                        id="form-custom-switch-inner-text" checked="">
+                                                    <input {{ ($company->status==1)?'checked':'' }} data-action="{{ URL::to('company-status-chnage') }}" data-id="{{ $company->id }}" class="company-status-chnage switch-input" type="checkbox"
+                                                        role="switch" id="form-custom-switch-inner-text">
                                                     <span class="switch-chk-label label-right">Off</span>
                                                 </div>
                                             </div>
@@ -126,27 +125,19 @@
                                                         </path>
                                                     </svg>
                                                 </a>
-                                                <a href="" class="badge badge-pill bg-danger">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="feather feather-trash-2  delete-multiple text-white">
-                                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                                        <path
-                                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                                        </path>
-                                                        <line x1="10" y1="11" x2="10"
-                                                            y2="17"></line>
-                                                        <line x1="14" y1="11" x2="14"
-                                                            y2="17"></line>
-                                                    </svg>
-                                                </a>
                                             </div>
                                         </td>
                                     </tr>
+                                    @empty
+                                    <tr>No Data Found</tr>
+                                    @endforelse
+
 
                                 </tbody>
                             </table>
+                            <div style="text-align: center;" class="pagination-custom_solid">
+                                {{ $companies->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

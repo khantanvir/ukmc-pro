@@ -51,4 +51,7 @@ class User extends Authenticatable
     public function officer(){
         return $this->hasOne(AdmissionOfficer::class);
     }
+    public function company(){
+        return $this->belongsTo(User::class);
+    }
 }

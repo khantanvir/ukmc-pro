@@ -4,7 +4,7 @@
         <div class="nav-logo">
             <div class="nav-item theme-logo">
                 <a href="#">
-                    <img src="{{ asset('backend/src/assets/img/logo2.svg') }}" class="navbar-logo" alt="logo">
+                    <img src="{{ asset('backend/images/company_logo/dummy-logo.jpg') }}" class="navbar-logo" alt="logo">
                 </a>
             </div>
             <div class="nav-item theme-text">
