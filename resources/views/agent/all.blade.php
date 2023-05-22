@@ -58,9 +58,10 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Company Name</th>
-                                        <th scope="col">Phone</th>
-                                        <th scope="col">Number Of Employee</th>
+                                        <th class="text-center">Company Name</th>
+                                        <th class="text-center">Phone</th>
+                                        <th class="text-center">Total Employee</th>
+                                        <th class="text-center">Agreement Expire</th>
                                         <th class="text-center" scope="col">Status</th>
                                         <th class="text-center" scope="col">Action</th>
                                     </tr>
@@ -93,6 +94,9 @@
                                         <td>
                                             <span class="text-success">{{ $company->users->count() }}</span>
                                         </td>
+                                        <td>
+                                            {{ date('Y-m-d',strtotime($company->agreement_expire_date)) }}
+                                        </td>
                                         <td class="text-center">
                                             <div
                                                 class="switch form-switch-custom switch-inline form-switch-primary form-switch-custom inner-text-toggle">
@@ -115,7 +119,7 @@
                                                         <circle cx="12" cy="12" r="3"></circle>
                                                     </svg>
                                                 </a>
-                                                <a href="" class="badge badge-pill bg-warning">
+                                                <a href="{{ URL::to('company/'.$company->id.'/edit') }}" class="badge badge-pill bg-warning">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

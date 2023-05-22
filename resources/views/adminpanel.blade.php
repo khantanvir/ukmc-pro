@@ -62,13 +62,13 @@
         <header class="header navbar navbar-expand-sm expand-header">
 
             <ul class="navbar-item theme-brand flex-row  text-center">
-                <li class="nav-item theme-logo">
+                <li class="nav-item theme-logo mt-1">
                     <a href="#">
-                        <img src="{{ asset('backend/images/company_logo/dummy-logo.jpg') }}" class="navbar-logo" alt="logo">
+                        <img src="{{ asset('backend/src/assets/img/logo.svg') }}" class="" alt="logo">
                     </a>
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="#" class="nav-link"> UKMC </a>
+                    <a href="#" class="nav-link"> AMS </a>
                 </li>
             </ul>
             <ul class="navbar-item flex-row ms-lg-auto ms-0 action-area">

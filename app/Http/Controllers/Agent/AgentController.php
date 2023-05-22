@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Agent\AgentCreateRequest;
+use App\Http\Requests\Agent\AgentEditRequest;
 use App\Models\Agent\Agent;
 use App\Models\Agent\Company;
 use App\Models\User;
@@ -14,6 +15,7 @@ Use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\File;
 
 class AgentController extends Controller{
     use Service;
@@ -60,6 +62,7 @@ class AgentController extends Controller{
         $data['page_title'] = 'Company | Edit';
         $data['agent'] = true;
         $data['company_data'] = Company::where('id',$id)->first();
+        $data['countries'] = Service::countries();
         return view('agent/edit',$data);
     }
     public function create_agent(){
@@ -213,7 +216,77 @@ class AgentController extends Controller{
             $agent->save();
         }
         Session::put('company_id',$company->id);
-        Session::flash('success','New Agnet Created Successfully!');
+        Session::flash('success','New Agent Created Successfully!');
+        if(!empty(Session::get('current_url'))){
+            return redirect(Session::get('current_url'));
+        }else{
+            return redirect('agents');
+        }
+    }
+    //edit data post
+    public function company_edit_data_post(AgentEditRequest $request){
+        $company = Company::where('id',$request->company_id)->first();
+        $company->company_name = $request->input('company_name');
+        $company->company_registration_number = $request->input('company_registration_number');
+        $company->company_establish_date = $request->input('company_establish_date');
+        //upload trade license doc here
+        $company_doc = $request->company_trade_license;
+        if ($request->hasFile('company_trade_license')) {
+            if (File::exists(public_path($company->company_trade_license))) {
+                File::delete(public_path($company->company_trade_license));
+            }
+            $ext = $company_doc->getClientOriginalExtension();
+            $doc_file_name = $company_doc->getClientOriginalName();
+            $doc_file_name = Service::slug_create($doc_file_name).rand(11, 99).'.'.$ext;
+            $upload_path1 = 'backend/images/company/company_trade_license/';
+            Service::createDirectory($upload_path1);
+            $request->file('company_trade_license')->move(public_path('backend/images/company/company_trade_license/'), $doc_file_name);
+            $company->company_trade_license = $upload_path1.$doc_file_name;
+        }
+
+        $company->company_trade_license_number = $request->input('company_trade_license_number');
+        $company->company_email = $request->input('company_email');
+        $company->company_phone = $request->input('company_phone');
+        $company->country = $request->input('country');
+        $company->state = $request->input('state');
+        $company->city = $request->input('city');
+        $company->zip_code = $request->input('zip_code');
+        $company->address = $request->input('address');
+        //upload company logo
+        $company_logo = $request->company_logo;
+        if ($request->hasFile('company_logo')) {
+            if (File::exists(public_path($company->company_logo))) {
+                File::delete(public_path($company->company_logo));
+            }
+            $ext = $company_logo->getClientOriginalExtension();
+            $filename = $company_logo->getClientOriginalName();
+            $filename = Service::slug_create($filename).rand(1100, 99999).'.'.$ext;
+            $image_resize = Image::make($company_logo->getRealPath());
+            $image_resize->resize(200, 200);
+            $upload_path = 'backend/images/company/company_logo/';
+            Service::createDirectory($upload_path);
+            $image_resize->save(public_path('backend/images/company/company_logo/'.$filename));
+            $company->company_logo = 'backend/images/company/company_logo/'.$filename;
+        }
+        $company->agreement_title = $request->input('agreement_title');
+        //upload agreement doc here
+        $agreement_doc_file = $request->agreement_doc_file;
+        if ($request->hasFile('agreement_doc_file')) {
+            if (File::exists(public_path($company->agreement_doc_file))) {
+                File::delete(public_path($company->agreement_doc_file));
+            }
+            $ext = $agreement_doc_file->getClientOriginalExtension();
+            $doc_file_name = $agreement_doc_file->getClientOriginalName();
+            $doc_file_name = Service::slug_create($doc_file_name).rand(11, 99).'.'.$ext;
+            $upload_path1 = 'backend/images/company/agreement_doc_file/';
+            Service::createDirectory($upload_path1);
+            $request->file('agreement_doc_file')->move(public_path('backend/images/company/agreement_doc_file/'), $doc_file_name);
+            $company->agreement_doc_file = $upload_path1.$doc_file_name;
+        }
+        $company->agreement_expire_date = $request->input('agreement_expire_date');
+        $company->save();
+        Session::put('company_id',$company->id);
+        Session::flash('success','Agent Updated Successfully!');
         if(!empty(Session::get('current_url'))){
             return redirect(Session::get('current_url'));
         }else{

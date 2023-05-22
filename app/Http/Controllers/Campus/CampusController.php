@@ -308,4 +308,13 @@ class CampusController extends Controller{
         Session::flash('success','Campus Archived Successfully!');
         return redirect('all-campus');
     }
+    //get all companyee employee
+    public function get_employees_by_company(){
+        $data['page_title'] = ' | List';
+        $data['campus'] = true;
+        $data['campus_archive'] = true;
+        $data['campuses'] = Campus::where('active',0)->orderBy('id','desc')->paginate(9);
+        $data['campus_id'] = Session::get('campus_id');
+        return view('campus/archive',$data);
+    }
 }

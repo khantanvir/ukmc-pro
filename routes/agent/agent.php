@@ -14,4 +14,5 @@ Route::controller(AgentController::class)->group(function () {
     Route::post('company-status-chnage', 'company_status_change');
     Route::get('reset-company-list','reset_company_list');
     Route::get('company/{id?}/edit','edit_company');
+    Route::post('company-edit-data-post', 'company_edit_data_post');
 });
