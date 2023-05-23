@@ -31,7 +31,7 @@
                     </header>
                 </div>
             </div>
-            <form method="post" action="{{ URL::to('create-agent-by-super-admin-post') }}" enctype="multipart/form-data">
+            <form method="post" action="{{ URL::to('edit-agent-by-super-admin-post') }}" enctype="multipart/form-data">
                 @csrf
                 <div id="card_1" class="col-lg-12 layout-spacing layout-top-spacing">
                     <div class="statbox widget box box-shadow">

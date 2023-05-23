@@ -19,6 +19,6 @@ Route::controller(AgentController::class)->group(function () {
     Route::get('create-agent-by-super-admin/{id?}/new','create_agent_by_super_admin');
     Route::post('create-agent-by-super-admin-post','create_agent_by_super_admin_post');
     Route::get('edit-agent-by-super-admin/{id?}/edit','edit_agent_by_super_admin');
-    Route::get('edit-agent-by-super-admin-post','edit_agent_by_super_admin_post');
+    Route::post('edit-agent-by-super-admin-post','edit_agent_by_super_admin_post');
 
 });

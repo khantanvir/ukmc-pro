@@ -17,6 +17,7 @@ Route::controller(HomeController::class)->group(function () {
 });
 Route::controller(TaskController::class)->group(function () {
     Route::get('task-create', 'create');
+    Route::post('task-store', 'store');
     Route::get('task-list', 'all');
     Route::get('my-tasks', 'my_tasks');
 });

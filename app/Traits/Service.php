@@ -689,4 +689,13 @@ trait Service
         ];
         return $roles;
     }
+    //priority list 
+    public static function priority(){
+        $list = array(
+            'Low',
+            'Medium',
+            'High',
+        );
+        return $list;
+    }
 }

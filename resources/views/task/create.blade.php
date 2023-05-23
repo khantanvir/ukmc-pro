@@ -30,7 +30,8 @@
                     </header>
                 </div>
             </div>
-            <form enctype="multipart/form-data">
+            <form method="post" action="{{ URL::to('task-store') }}" enctype="multipart/form-data">
+                @csrf
                 <div id="card_1" class="col-lg-12 layout-spacing layout-top-spacing">
                     <div class="statbox widget box box-shadow">
                         <div class="widget-content widget-content-area">
@@ -41,55 +42,68 @@
                                     </div><br>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Assign Person</label><select class="form-control">
-                                            <option disabled="" value="">Select Assign Person</option>
-                                            <option value="1">Riazul Islam</option>
-                                            <option value="2">Tanvir Nawaz</option>
-                                            <option value="3">Naveen</option>
+                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Assign Person*</label>
+                                        <select name="assign_to" class="form-control">
+                                            <option value="">Select Assign Person</option>
+                                            @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">
+                                                {{ $user->name }} {{ ($user->role=='teacher')?'(Teacher)':'(Admission Manager)' }}
+                                            </option>
+                                            @endforeach
+                                            
                                         </select>
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                        @if($errors->has('assign_to'))
+                                            <span class="text-danger">{{ $errors->first('assign_to') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Task Name</label><input type="text" class="form-control" name="institute_name">
-                                        <ul>
-                                            <!---->
-                                        </ul>
+                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Task Name*</label>
+                                        <input type="text" class="form-control" value="{{ old('task_name') }}" name="task_name">
+                                        @if($errors->has('task_name'))
+                                            <span class="text-danger">{{ $errors->first('task_name') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-7">
+                                    <div class="form-group mb-2"><label for="exampleFormControlTextarea1">Task Details*</label>
+                                        <textarea class="form-control" rows="3" name="task_details">{{ old('task_details') }}</textarea>
+                                        @if($errors->has('task_details'))
+                                            <span class="text-danger">{{ $errors->first('task_details') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlTextarea1">Task Details</label>
-                                        <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="scholarship_policy"></textarea>
+                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Priority*</label>
+                                        <select name="priority" class="form-control">
+                                            <option value="">--Select One--</option>
+                                            @foreach ($priorities as $priority)
+                                            <option value="{{ $priority }}">{{ $priority }}</option> 
+                                            @endforeach
+                                        </select>
+                                        @if($errors->has('priority'))
+                                            <span class="text-danger">{{ $errors->first('priority') }}</span>
+                                        @endif
                                         <ul>
                                             <!---->
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlTextarea1"> Tasks Notes</label>
-                                        <textarea id="exampleFormControlTextarea1" class="form-control" rows="3" spellcheck="false"
-                                            name="institute_important_notes"></textarea>
-                                        <ul>
-                                            <!---->
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-
-                                <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Task Start Date</label>
-                                        <input type="date" class="form-control" name="campus_name">
+                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Task Doc(Optional)</label>
+                                        <input type="file" class="form-control-file" name="doc">
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Task Deadline</label>
-                                        <input type="date" class="form-control" name="campus_name">
+                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Task Deadline*</label>
+                                        <input type="date" class="form-control" name="deadline">
+                                        @if($errors->has('deadline'))
+                                            <span class="text-danger">{{ $errors->first('deadline') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

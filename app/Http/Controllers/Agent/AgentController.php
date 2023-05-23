@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\File;
+use PharIo\Manifest\Url as ManifestUrl;
+use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
 
 class AgentController extends Controller{
     use Service;
@@ -337,6 +339,7 @@ class AgentController extends Controller{
         $data['agent_data'] = User::where('role','agent')->where('company_id',$data['company_data']->id)->orderBy('id','desc')->paginate(10);
         $data['agent'] = true;
         Session::forget('agent_id');
+        Session::put('current_url',URL::full());
         return view('agent/agent_list',$data);
     }
     public function create_agent_by_super_admin($id=NULL){
@@ -455,5 +458,11 @@ class AgentController extends Controller{
         $agent->agent_zip_code = $request->agent_zip_code;
         $agent->agent_address = $request->agent_address;
         $agent->save();
+        Session::put('agent_id',$user->id);
+        if(!empty(Session::get('current_url'))){
+            return redirect(Session::get('current_url'));
+        }else{
+            return redirect('get-employees-by-company/'.$user->company_id.'/list');
+        }
     }
 }
