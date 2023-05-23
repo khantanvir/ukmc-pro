@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Admission\AdmissionOfficer;
+use App\Models\Agent\Agent;
 use App\Models\Teacher\Teacher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -53,5 +54,8 @@ class User extends Authenticatable
     }
     public function company(){
         return $this->belongsTo(User::class);
+    }
+    public function agent(){
+        return $this->hasOne(Agent::class);
     }
 }

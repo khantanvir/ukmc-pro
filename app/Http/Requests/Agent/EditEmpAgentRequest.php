@@ -4,7 +4,7 @@ namespace App\Http\Requests\Agent;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AgentCreateRequest extends FormRequest
+class EditEmpAgentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,19 +22,6 @@ class AgentCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company_name' => 'required',
-            'company_registration_number' => 'required',
-            'company_establish_date' => 'required',
-            'company_trade_license_number' => 'required',
-            'company_email' => 'required',
-            'company_phone' => 'required',
-            'country' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            'zip_code' => 'required',
-            'address' => 'required',
-            'agreement_title' => 'required',
-            'agreement_expire_date' => 'required',
             'agent_name' => 'required',
             'agent_phone' => 'required',
             'agent_email' => 'required',
@@ -45,10 +32,6 @@ class AgentCreateRequest extends FormRequest
             'agent_city' => 'required',
             'agent_zip_code' => 'required',
             'agent_address' => 'required',
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
-            'password_confirmation' => 'min:6',
         ];
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Agent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Agent\AgentCreateRequest;
 use App\Http\Requests\Agent\AgentEditRequest;
+use App\Http\Requests\Agent\CreateEmpAgentByAdminRequest;
+use App\Http\Requests\Agent\EditEmpAgentRequest;
 use App\Models\Agent\Agent;
 use App\Models\Agent\Company;
 use App\Models\User;
@@ -326,5 +328,132 @@ class AgentController extends Controller{
             'val'=>$msg
         );
         return response()->json($data,200);
+    }
+    //get all companyee employee
+    public function get_employees_by_company($id=NULL){
+        $data['page_title'] = 'Agents | Employee List';
+        $data['agent_id'] = Session::get('agent_id');
+        $data['company_data'] = Company::where('id',$id)->first();
+        $data['agent_data'] = User::where('role','agent')->where('company_id',$data['company_data']->id)->orderBy('id','desc')->paginate(10);
+        $data['agent'] = true;
+        Session::forget('agent_id');
+        return view('agent/agent_list',$data);
+    }
+    public function create_agent_by_super_admin($id=NULL){
+        $data['page_title'] = 'Agents | Create New Employee';
+        $data['company_data'] = Company::where('id',$id)->first();
+        $data['countries'] = Service::countries();
+        $data['agent'] = true;
+        return view('agent/create_sub_agent_by_admin',$data);
+    }
+    public function create_agent_by_super_admin_post(CreateEmpAgentByAdminRequest $request){
+        $first_name = "";
+        $last_name = "";
+        $user = new User();
+        $user->name = $request->name;
+        if($user->name){
+            $array = explode(" ",$user->name);
+            foreach($array as $key=>$row){
+                if($key==0){
+                    $first_name = $row;
+                }
+                if(!empty($row) && $key != 0){
+                    $last_name .= $row.' ';
+                }
+            }
+        }
+        $user->first_name = $first_name;
+        $user->last_name = $last_name;
+        $user->role = 'agent';
+        $user->email = $request->email;
+        $user->phone = $request->agent_phone;
+        //slug create
+        $url_modify = Service::slug_create($request->name);
+        $checkSlug = User::where('slug', 'LIKE', '%' . $url_modify . '%')->count();
+        if ($checkSlug > 0) {
+            $new_number = $checkSlug + 1;
+            $new_slug = $url_modify . '-' . $new_number;
+            $user->slug = $new_slug;
+        } else {
+            $user->slug = $url_modify;
+        }
+        $photo = $request->image;
+        if ($request->hasFile('image')) {
+
+            $ext = $photo->getClientOriginalExtension();
+            $filename = $photo->getClientOriginalName();
+            $filename = Service::slug_create($filename).rand(1100, 99999).'.'.$ext;
+            $image_resize = Image::make($photo->getRealPath());
+            $image_resize->resize(200, 200);
+            $upload_path = 'backend/images/users/agent/';
+            Service::createDirectory($upload_path);
+            $image_resize->save(public_path('backend/images/users/agent/'.$filename));
+            $user->photo = 'backend/images/users/agent/'.$filename;
+        }
+        $user->password = Hash::make($request->password);
+        $user->company_id = $request->company_id;
+        $user->is_admin = 0;
+        $user->save();
+        //create agent information
+        $agent = new Agent();
+        $agent->user_id = $user->id;
+        $agent->agent_name = $request->agent_name;
+        $agent->agent_phone = $request->agent_phone;
+        $agent->agent_email = $request->agent_email;
+        $agent->alternative_person_contact = $request->alternative_person_contact;
+        $agent->nid_or_passport = $request->nid_or_passport;
+        $agent->nationality = $request->nationality;
+        $agent->agent_country = $request->agent_country;
+        $agent->agent_state = $request->agent_state;
+        $agent->agent_city = $request->agent_city;
+        $agent->agent_zip_code = $request->agent_zip_code;
+        $agent->agent_address = $request->agent_address;
+        $agent->save();
+        Session::put('agent_id',$user->id);
+        Session::flash('success','New Agent Employee Created Successfully!');
+        return redirect('get-employees-by-company/'.$request->company_id.'/list');
+    }
+    //edit agent details
+    public function edit_agent_by_super_admin($id=NULL){
+        $data['page_title'] = 'Agents | Edit Agent Employee';
+        $data['agent_data'] = User::where('id',$id)->first();
+        $data['company_data'] = Company::where('id',$data['agent_data']->company_id)->first();
+        $data['countries'] = Service::countries();
+        $data['agent'] = true;
+        return view('agent/edit_agent_details',$data);
+    }
+    public function edit_agent_by_super_admin_post(EditEmpAgentRequest $request){
+        $user = User::where('id',$request->user_id)->first();
+        $photo = $request->image;
+        if($request->hasFile('image')) {
+            if (File::exists(public_path($user->photo))) {
+                File::delete(public_path($user->photo));
+            }
+            $ext = $photo->getClientOriginalExtension();
+            $filename = $photo->getClientOriginalName();
+            $filename = Service::slug_create($filename).rand(1100, 99999).'.'.$ext;
+            $image_resize = Image::make($photo->getRealPath());
+            $image_resize->resize(200, 200);
+            $upload_path = 'backend/images/users/agent/';
+            Service::createDirectory($upload_path);
+            $image_resize->save(public_path('backend/images/users/agent/'.$filename));
+            $user->photo = 'backend/images/users/agent/'.$filename;
+        }
+        $user->save();
+        //create agent information
+        $agent = Agent::where('user_id',$user->id)->first();
+        $agent->user_id = $user->id;
+        $agent->agent_name = $request->agent_name;
+        $agent->agent_phone = $request->agent_phone;
+        $agent->agent_email = $request->agent_email;
+        $agent->alternative_person_contact = $request->alternative_person_contact;
+        $agent->nid_or_passport = $request->nid_or_passport;
+        $agent->nationality = $request->nationality;
+        $agent->agent_country = $request->agent_country;
+        $agent->agent_state = $request->agent_state;
+        $agent->agent_city = $request->agent_city;
+        $agent->agent_zip_code = $request->agent_zip_code;
+        $agent->agent_address = $request->agent_address;
+        $agent->save();
     }
 }

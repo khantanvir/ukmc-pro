@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\AdmissionManager;
+namespace App\Http\Requests\Agent;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdmissionManagerRequest extends FormRequest
+class CreateEmpAgentByAdminRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,18 +22,16 @@ class AdmissionManagerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'campus_id' => 'required',
-            'officer_name' => 'required',
-            'officer_phone' => 'required',
-            'officer_email' => 'required',
-            'officer_alternative_contact' => 'required',
-            'officer_nid_or_passport' => 'required',
+            'agent_name' => 'required',
+            'agent_phone' => 'required',
+            'agent_email' => 'required',
+            'nid_or_passport' => 'required',
             'nationality' => 'required',
-            'country' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            'address' => 'required',
-            'photo' => 'required',
+            'agent_country' => 'required',
+            'agent_state' => 'required',
+            'agent_city' => 'required',
+            'agent_zip_code' => 'required',
+            'agent_address' => 'required',
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',

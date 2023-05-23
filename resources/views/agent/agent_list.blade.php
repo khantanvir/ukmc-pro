@@ -20,8 +20,9 @@
                                 </div>
                                 <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#">Agent Company</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">All</li>
+                                        <li class="breadcrumb-item"><a href="{{ URL::to('agents') }}">Agent Company</a></li>
+                                        <li class="breadcrumb-item"><a href="#">{{ $company_data->company_name }}</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">List of Employee</li>
                                     </ol>
                                 </nav>
 
@@ -30,51 +31,36 @@
                     </header>
                 </div>
             </div>
-            <h5 class="p-3">Company List</h5>
-            <div class="widget-content widget-content-area">
-                <form method="get" action="">
-                    <div class="row">
-
-                        <div class="col-6">
-                            <input type="text" value="{{ (!empty($get_company_name))?$get_company_name:'' }}" name="company_name" class="form-control" placeholder="Enter Company Name">
-                        </div>
-                        <div class="col-1">
-                            <input type="submit" value="Filter" name="name-list" class="btn btn-warning">
-                        </div>
-                        <div class="col-1">
-                            <a class="btn btn-danger" href="{{ URL::to('reset-company-list') }}">Reset</a>
-                        </div>
-                        <div class="col-4">
-                            <a style="float: right;" class="btn btn-secondary" href="{{ URL::to('create-agent') }}">+ Add Agent</a>
-                        </div>
-                    </div>
-                </form>
+            <h5 class="p-3">Employee List</h5>
+            <div class="row">
+                <div class="col-12">
+                    <a style="float: right;" class="btn btn-secondary" href="{{ URL::to('create-agent-by-super-admin/'.$company_data->id.'/new') }}">+ Add Agent</a>
+                </div>
             </div>
             <div class="row layout-top-spacing">
-
                 <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                     <div class="widget-content widget-content-area br-8">
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Company Name</th>
+                                        <th class="text-center">Agent Name</th>
                                         <th class="text-center">Phone</th>
-                                        <th class="text-center">Total Employee</th>
-                                        <th class="text-center">Agreement Expire</th>
+                                        <th class="text-center">Total Applications</th>
+                                        <th class="text-center" scope="col">Role</th>
                                         <th class="text-center" scope="col">Status</th>
                                         <th class="text-center" scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($companies as $company)
-                                    <tr class="{{ (!empty($company_id) && $company_id==$company->id)?'tr-bg':'' }}">
+                                    @forelse ($agent_data as $agent)
+                                    <tr class="{{ (!empty($agent_id) && $agent_id==$agent->id)?'tr-bg':'' }}">
                                         <td>
                                             <div class="media">
                                                 <div class="avatar me-2">
-                                                    @if(!empty($company->company_logo))
+                                                    @if(!empty($agent->photo))
                                                     <img alt="avatar"
-                                                        src="{{ asset($company->company_logo) }}"
+                                                        src="{{ asset($agent->photo) }}"
                                                         class="rounded-circle" />
                                                     @else
                                                     <img alt="avatar"
@@ -83,26 +69,30 @@
                                                     @endif
                                                 </div>
                                                 <div class="media-body align-self-center">
-                                                    <h6 class="mb-0">{{ $company->company_name }}</h6>
-                                                    <span>{{ $company->company_email }}</span>
+                                                    <h6 class="mb-0">{{ $agent->name }}</h6>
+                                                    <span>{{ $agent->email }}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            {{ $company->company_phone }}
+                                            {{ $agent->phone }}
                                         </td>
                                         <td>
-                                            <span class="text-success">{{ $company->users->count() }}</span>
+                                            Total: 1
                                         </td>
                                         <td>
-                                            {{ date('Y-m-d',strtotime($company->agreement_expire_date)) }}
+                                            @if($agent->is_admin==1)
+                                            <span class="text-success">Admin</span>
+                                            @else
+                                            <span class="text-success">Employee</span>
+                                            @endif
+
                                         </td>
                                         <td class="text-center">
-                                            <div
-                                                class="switch form-switch-custom switch-inline form-switch-primary form-switch-custom inner-text-toggle">
+                                            <div class="switch form-switch-custom switch-inline form-switch-primary form-switch-custom inner-text-toggle">
                                                 <div class="input-checkbox">
                                                     <span class="switch-chk-label label-left">On</span>
-                                                    <input {{ ($company->status==1)?'checked':'' }} data-action="{{ URL::to('company-status-chnage') }}" data-id="{{ $company->id }}" class="company-status-chnage switch-input" type="checkbox"
+                                                    <input {{ ($agent->active==1)?'checked':'' }} data-action="{{ URL::to('user-status-chnage') }}" data-id="{{ $agent->id }}" class="user-status-chnage switch-input" type="checkbox"
                                                         role="switch" id="form-custom-switch-inner-text">
                                                     <span class="switch-chk-label label-right">Off</span>
                                                 </div>
@@ -110,16 +100,7 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="action-btns">
-                                                <a href="{{ URL::to('get-employees-by-company/'.$company->id.'/list') }}" class="badge badge-pill bg-primary">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="feather feather-eye text-white">
-                                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                        <circle cx="12" cy="12" r="3"></circle>
-                                                    </svg>
-                                                </a>
-                                                <a href="{{ URL::to('company/'.$company->id.'/edit') }}" class="badge badge-pill bg-warning">
+                                                <a href="{{ URL::to('edit-agent-by-super-admin/'.$agent->id.'/edit') }}" class="badge badge-pill bg-warning">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -140,7 +121,7 @@
                                 </tbody>
                             </table>
                             <div style="text-align: center;" class="pagination-custom_solid">
-                                {{ $companies->links() }}
+                                {{ $agent_data->links() }}
                             </div>
                         </div>
                     </div>

@@ -15,4 +15,10 @@ Route::controller(AgentController::class)->group(function () {
     Route::get('reset-company-list','reset_company_list');
     Route::get('company/{id?}/edit','edit_company');
     Route::post('company-edit-data-post', 'company_edit_data_post');
+    Route::get('get-employees-by-company/{id?}/list','get_employees_by_company');
+    Route::get('create-agent-by-super-admin/{id?}/new','create_agent_by_super_admin');
+    Route::post('create-agent-by-super-admin-post','create_agent_by_super_admin_post');
+    Route::get('edit-agent-by-super-admin/{id?}/edit','edit_agent_by_super_admin');
+    Route::get('edit-agent-by-super-admin-post','edit_agent_by_super_admin_post');
+
 });
