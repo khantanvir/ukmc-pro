@@ -20,6 +20,8 @@ Route::controller(TaskController::class)->group(function () {
     Route::post('task-store', 'store');
     Route::get('task-list', 'all');
     Route::get('my-tasks', 'my_tasks');
+    Route::get('edit-task/{slug?}', 'edit');
+    Route::post('edit-task-post', 'edit_post');
 });
 Route::controller(SettingController::class)->group(function () {
     Route::get('company-settings', 'company_settings');

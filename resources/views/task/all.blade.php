@@ -14,8 +14,7 @@
                             </div>
                             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Application</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Create</li>
+                                    <li class="breadcrumb-item"><a href="{{ URL::to('task-create') }}">Task Create</a></li>
                                 </ol>
                             </nav>
 
@@ -36,70 +35,74 @@
                                     <th>Task Name</th>
                                     <th>Assign Person</th>
                                     <th>Progress</th>
-                                    <th>Task Done</th>
+                                    <th>Priority</th>
+                                    <th class="text-center">Status</th>
                                     <th class="text-center">Deadline</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Website Design</td>
+                                @forelse ($tasks as $task)
+                                <tr class="{{ (!empty($get_task_id) && $get_task_id==$task->id)?'tr-bg':'' }}">
+                                    <td>{{ $task->task_name }}</td>
                                     <td>
-                                        <p class="text-danger">Riazul Islam</p>
+                                        <p class="text-danger">{{ $task->user->name }}</p>
                                     </td>
                                     <td>
                                         <div class="progress br-30">
-                                            <div class="progress-bar br-30 bg-danger" role="progressbar" style="width: 29.56%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                              @if($task->status==1)
+                                              <div class="progress-bar br-30 bg-danger" role="progressbar" style="width: 29.56%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                              @elseif($task->status==2)
+                                              <div class="progress-bar br-30 bg-danger" role="progressbar" style="width: 59.56%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div> 
+                                              @elseif($task->status==3)
+                                              <div class="progress-bar br-30 bg-danger" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div> 
+                                              @else
+                                              <div class="progress-bar br-30 bg-danger" role="progressbar" style="width: {{ ($task->is_view==1)?'10%':'0%' }}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div> 
+                                            @endif
+                                            
                                         </div>
                                     </td>
                                     </td>
+                                    
+                                    <td>{{ $task->priority }}</td>
                                     <td>
-                                        <p class="text-danger">29.56%</p>
+                                        @if($task->status==0)
+                                        <span class="badge badge-light-primary mb-2 me-4">Pending</span>
+                                        @elseif($task->status==1)
+                                        <span class="badge badge-light-info mb-2 me-4">Ongoing</span>
+                                        @elseif($task->status==2)
+                                        <span class="badge badge-light-warning mb-2 me-4">Progress</span>
+                                        @elseif($task->status==3)
+                                        <span class="badge badge-light-success mb-2 me-4">Complete</span>
+                                        @else
+                                        <span class="badge badge-light-danger mb-2 me-4">Cancel</span>
+                                        @endif
                                     </td>
                                     <td class="text-center">
-                                        <p>25-May-2023</p>
+                                        <p>{{ date('Y-m-d',strtotime($task->deadline)) }}</p>
                                     </td>
                                     <td class="text-center">
                                         <a href="" class="badge badge-pill bg-primary">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-white"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                         </a>
-                                        <a href="" class="badge badge-pill bg-warning">
+                                        <a href="{{ URL::to('edit-task/'.$task->slug) }}" class="badge badge-pill bg-warning">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 text-white"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                                         </a>
+                                        @if($task->status==3 || $task->status==4)
                                         <a href="" class="badge badge-pill bg-danger">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2  delete-multiple text-white"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                         </a></td>
-                                </tr>
-                                <tr>
-                                    <td>CRM Account Feature</td>
-                                    <td>
-                                        <p class="text-danger">Tanvir Nawaz</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress br-30">
-                                            <div class="progress-bar br-30 bg-danger" role="progressbar" style="width: 29.56%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                    </td>
-                                    <td>
-                                        <p class="text-danger">29.56%</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p>27-May-2023</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="" class="badge badge-pill bg-primary">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-white"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                        </a>
-                                        <a href="" class="badge badge-pill bg-warning">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 text-white"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                                        </a>
-                                        <a href="" class="badge badge-pill bg-danger">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2  delete-multiple text-white"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                        </a></td>
-                                </tr>
+                                        @endif
+                                        
+                                </tr> 
+                                @empty
+                                <tr>No Data Found</tr> 
+                                @endforelse
                             </tbody>
                         </table>
+                        <div style="text-align: center;" class="pagination-custom_solid">
+                            {{ $tasks->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

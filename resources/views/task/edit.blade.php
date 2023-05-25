@@ -21,7 +21,7 @@
                                 <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ URL::to('task-list') }}">Tasks</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Create</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Edit</li>
                                     </ol>
                                 </nav>
 
@@ -30,7 +30,7 @@
                     </header>
                 </div>
             </div>
-            <form method="post" action="{{ URL::to('task-store') }}" enctype="multipart/form-data">
+            <form method="post" action="{{ URL::to('edit-task-post') }}" enctype="multipart/form-data">
                 @csrf
                 <div id="card_1" class="col-lg-12 layout-spacing layout-top-spacing">
                     <div class="statbox widget box box-shadow">
@@ -42,11 +42,12 @@
                                     </div><br>
                                 </div>
                                 <div class="col">
+                                    <input type="hidden" name="task_id" value="{{ $task_data->id }}" />
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Assign Person*</label>
                                         <select name="assign_to" class="form-control">
                                             <option value="">Select Assign Person</option>
                                             @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">
+                                            <option {{ (!empty($task_data->assign_to) && $task_data->assign_to==$user->id)?'selected':'' }} value="{{ $user->id }}">
                                                 {{ $user->name }} {{ ($user->role=='teacher')?'(Teacher)':'(Admission Manager)' }}
                                             </option>
                                             @endforeach
@@ -59,7 +60,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Task Name*</label>
-                                        <input type="text" class="form-control" value="{{ old('task_name') }}" name="task_name">
+                                        <input type="text" class="form-control" value="{{ (!empty($task_data->task_name))?$task_data->task_name:'' }}" name="task_name">
                                         @if($errors->has('task_name'))
                                             <span class="text-danger">{{ $errors->first('task_name') }}</span>
                                         @endif
@@ -69,7 +70,7 @@
                             <div class="row mb-2">
                                 <div class="col-7">
                                     <div class="form-group mb-2"><label for="exampleFormControlTextarea1">Task Details*</label>
-                                        <textarea class="form-control" rows="3" name="task_details">{{ old('task_details') }}</textarea>
+                                        <textarea class="form-control" rows="3" name="task_details">{{ (!empty($task_data->task_details))?$task_data->task_details:'' }}</textarea>
                                         @if($errors->has('task_details'))
                                             <span class="text-danger">{{ $errors->first('task_details') }}</span>
                                         @endif
@@ -82,7 +83,7 @@
                                         <select name="priority" class="form-control">
                                             <option value="">--Select One--</option>
                                             @foreach ($priorities as $priority)
-                                            <option value="{{ $priority }}">{{ $priority }}</option> 
+                                            <option {{ (!empty($task_data->priority) && $task_data->priority==$priority)?'selected':'' }} value="{{ $priority }}">{{ $priority }}</option> 
                                             @endforeach
                                         </select>
                                         @if($errors->has('priority'))
@@ -96,11 +97,16 @@
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Task Doc(Optional)</label>
                                         <input type="file" class="form-control-file" name="doc">
+                                        @if(!empty($task_data->doc))
+                                        <div class="custom-file-container__image-preview">
+                                            <a href="{{ asset($task_data->doc) }}" >Download Doc</a>
+                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Task Deadline*</label>
-                                        <input type="date" class="form-control" name="deadline">
+                                        <input value="{{ date('Y-m-d',strtotime($task_data->deadline)) }}" type="date" class="form-control" name="deadline">
                                         @if($errors->has('deadline'))
                                             <span class="text-danger">{{ $errors->first('deadline') }}</span>
                                         @endif

@@ -60,6 +60,6 @@ class User extends Authenticatable
         return $this->hasOne(Agent::class);
     }
     public function tasks(){
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class, 'assign_to', 'id');
     }
 }

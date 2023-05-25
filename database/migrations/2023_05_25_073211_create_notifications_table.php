@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('create_date')->nullable();
             $table->integer('create_by')->nullable();
+            $table->text('creator_image')->nullable();
+            $table->string('creator_name')->nullable();
             $table->integer('user_id')->nullable();
             $table->tinyInteger('status')->nullable()->default(0);
             $table->tinyInteger('is_view')->nullable()->default(0);
