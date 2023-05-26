@@ -22,6 +22,8 @@ Route::controller(TaskController::class)->group(function () {
     Route::get('my-tasks', 'my_tasks');
     Route::get('edit-task/{slug?}', 'edit');
     Route::post('edit-task-post', 'edit_post');
+    Route::get('task/details/{slug?}','details');
+    Route::post('task-coment-store', 'task_commment');
 });
 Route::controller(SettingController::class)->group(function () {
     Route::get('company-settings', 'company_settings');

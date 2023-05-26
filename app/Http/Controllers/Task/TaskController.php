@@ -156,18 +156,60 @@ class TaskController extends Controller{
         Session::flash('success','Task Updated Successfully!');
         return redirect('task-list');
     }
-    public function task_viewed_by_admin($slug=NULL){
+    public function details($slug=NULL){
         if(!Auth::check() && Auth::user()->role != 'admin'){
             Session::flash('error','Don,t have any permission to Create Task!');
             return redirect('task-list');
         }
-        $data['page_title'] = 'Task | Edit';
+        $data['page_title'] = 'Task | Details';
         $data['task'] = true;
         $data['task_all'] = true;
         $data['users'] = User::where('role','!=','agent')->where('role','!=','admin')->where('active',1)->get();
         $data['priorities'] = Service::priority();
         $data['task_data'] = Task::where('slug',$slug)->first();
+        $data['coments'] = json_decode($data['task_data']->coments);
         return view('task/task_details',$data);
+    }
+    //task comment 
+    public function task_commment(Request $request){
+        $request->validate([
+            'coment' => 'required',
+        ]);
+        $task = Task::where('id',$request->task_id)->first();
+        if(!$task){
+            Session::flash('error','Task Data Not Found! Server Error');
+            return redirect('task-list');
+        }
+        if(!empty($task->coments)){
+            $get_task_arr = json_decode($task->coments);
+            $id = count($get_task_arr) + 1;
+            //make comment array
+            $taskComent[] = array(
+                'id'=>$id,
+                'name'=>Auth::user()->name,
+                'photo'=>Auth::user()->photo,
+                'create_date'=>time(),
+                'coment'=>$request->coment,
+            );
+            $merge = array_merge($get_task_arr,$taskComent);
+            $coment = json_encode($merge);
+            //update data
+            $update = Task::where('id',$task->id)->update(['coments'=>$coment]);
+            Session::flash('success','Coment Added');
+            return redirect('task/details/'.$task->slug);
+        }else{
+            $taskComent[] = array(
+                'id'=> 1,
+                'name'=>Auth::user()->name,
+                'photo'=>Auth::user()->photo,
+                'create_date'=>time(),
+                'coment'=>$request->coment,
+            );
+            $coment = json_encode($taskComent);
+            $update = Task::where('id',$task->id)->update(['coments'=>$coment]);
+            Session::flash('success','Coment Added');
+            return redirect('task/details/'.$task->slug);
+        }
     }
     public function my_tasks(){
         $data['page_title'] = 'Task | My Task';
