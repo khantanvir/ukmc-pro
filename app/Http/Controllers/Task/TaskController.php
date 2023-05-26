@@ -166,6 +166,7 @@ class TaskController extends Controller{
         $data['task_all'] = true;
         $data['users'] = User::where('role','!=','agent')->where('role','!=','admin')->where('active',1)->get();
         $data['priorities'] = Service::priority();
+        $data['task_status'] = Service::task_status();
         $data['task_data'] = Task::where('slug',$slug)->first();
         $data['coments'] = json_decode($data['task_data']->coments);
         return view('task/task_details',$data);
@@ -211,10 +212,30 @@ class TaskController extends Controller{
             return redirect('task/details/'.$task->slug);
         }
     }
+    //status change 
+    public function task_status_chnage(Request $request){
+        $task = Task::where('id',$request->task_id)->first();
+        if(!$task){
+            $data['result'] = array(
+                'key'=>101,
+                'val'=>'Task Data Not Found!'
+            );
+            return response()->json($data,200);
+        }
+        $status = $request->status;
+        $message = ($status == 0) ? "Pending" : (($status == 1) ? "Ongoing" : (($status == 2) ? "Progress" : (($status == 3) ? "Complete" : (($status == 4) ? "Cancel" : "Not Found"))));
+        $update = Task::where('id',$task->id)->update(['status'=>$status]);
+        $data['result'] = array(
+            'key'=>101,
+            'val'=>'Task is Now '.$message
+        );
+        return response()->json($data,200);
+    }
     public function my_tasks(){
         $data['page_title'] = 'Task | My Task';
         $data['task'] = true;
         $data['task_my'] = true;
+        $data['tasks'] = Task::orderBy('id','desc')->where('assign_to',Auth::user()->id)->paginate(10);
         return view('task/mytask',$data);
     }
 }

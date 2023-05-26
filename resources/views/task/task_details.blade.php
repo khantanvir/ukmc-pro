@@ -81,6 +81,23 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(Auth::user()->id==$task_data->assign_to)
+                            <div class="row mb-4">
+                                <div class="col-3">
+                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Change Status*</label>
+                                        <select data-id="{{ $task_data->id }}" data-action="{{ URL::to('task-status-chnage') }}" name="status" class="task-status-change form-control" onchange="task_status_change()">
+                                            <option value="">--Select One--</option>
+                                            @foreach ($task_status as $status)
+                                            <option {{ ($status['id']==$task_data->status)?'selected':'' }} value="{{ $status['id'] }}">{{ $status['val'] }}</option> 
+                                            @endforeach
+                                        </select>
+                                        <ul>
+                                            <!---->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                         <div>
                             <h5 class="mb-5">Comments <span class="comment-count">({{ (!empty($coments))?count($coments):'0' }})</span></h5>

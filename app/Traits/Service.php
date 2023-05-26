@@ -698,4 +698,29 @@ trait Service
         );
         return $list;
     }
+    public static function task_status(){
+        $status = [
+            array(
+                'id'=>0,
+                'val'=>'Pending'
+            ),
+            array(
+                'id'=>1,
+                'val'=>'Ongoing'
+            ),
+            array(
+                'id'=>2,
+                'val'=>'Progress'
+            ),
+            array(
+                'id'=>3,
+                'val'=>'Complete'
+            ),
+            array(
+                'id'=>4,
+                'val'=>'Cancel'
+            ),
+        ];
+        return $status;
+    }
 }
