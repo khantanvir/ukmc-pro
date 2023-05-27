@@ -80,9 +80,12 @@
                 </li>
 
                 <li class="nav-item dropdown notification-dropdown">
-                    <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @php
+                        $notify_count = App\Models\Notification\Notification::where('user_id',Auth::user()->id)->count();
+                    @endphp
+                    <a onclick="show_notifications()" href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                        <span id="notification-badge" class="custom-badge badge badge-success">1</span>
+                        <span id="notification-badge" class="custom-badge badge badge-success">{{ $notify_count }}</span>
                     </a>
 
 
@@ -90,7 +93,7 @@
                         <div class="drodpown-title message">
                             <h6 class="d-flex justify-content-between"><span class="align-self-center">Notifications</span> <span class="badge badge-primary">9 Unread</span></h6>
                         </div>
-                        <div class="notification-scroll">
+                        <div id="notification-item" class="notification-scroll">
                             <div class="dropdown-item">
                                 <div class="media server-log">
                                     <img src="{{ asset('backend/src/assets/img/profile-16.jpeg') }}" class="img-fluid me-2" alt="avatar">
@@ -100,64 +103,12 @@
                                             <p><small class="">Updated application status<span class="text-danger"> hot</span> to <span class="text-success">potential</span> lead.</small></p>
                                             <p class="">1 hr ago</p>
                                         </div>
-
                                         <div class="icon-status">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="dropdown-item">
-                                <div class="media ">
-                                    <img src="{{ asset('backend/src/assets/img/profile-15.jpeg') }}" class="img-fluid me-2" alt="avatar">
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="tw-bold">Sanjana Rahman</h6>
-                                            <p><small class="">Updated application status<span class="text-danger"> New</span> to <span class="text-success">hot</span> lead.</small></p>
-                                            <p class="">8 hrs ago</p>
-                                        </div>
-
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="dropdown-item">
-                                <div class="media file-upload">
-                                    <img src="{{ asset('backend/src/assets/img/profile-21.jpeg') }}" class="img-fluid me-2" alt="avatar">
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">Ariful Islam</h6>
-                                            <p><small class="">add <span class="text-danger">new</span> application lead to all lead.</small></p>
-                                            <p class="">14 hrs ago</p>
-                                        </div>
-
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="dropdown-item">
-                                <div class="media file-upload">
-                                    <img src="https://devriazul.fastitbd.com/images/devriazul.jpg" class="img-fluid me-2" alt="avatar">
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">Riazul Islam</h6>
-                                            <p><small class=""><span class="text-danger">Updated</span> Profile information.</small></p>
-                                            <p class="">23 hrs ago</p>
-                                        </div>
-
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 
@@ -367,6 +318,22 @@
         @include('ajax.taskUser')
 
         <script>
+            function get_notifications(){
+                $.get('{{ URL::to('get-notification-count') }}',function(data,status){
+                    if(data['result']['key']===200){
+                        console.log(data['result']['val']);
+                        $('#notification-badge').html(data['result']['val']);
+                    }
+                });
+            }
+            function show_notifications(){
+                $.get('{{ URL::to('get-my-notification') }}',function(data,status){
+                    if(data['result']['key']===200){
+                        console.log(data['result']['val']);
+                        $('#notification-item').html(data['result']['val']);
+                    }
+                });
+            }
             $(function(){
 				$('.campus-change-status').change(function(){
 					var active = $(this).prop('checked') == true ? 1 : 0;

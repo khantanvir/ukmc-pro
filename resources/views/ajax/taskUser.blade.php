@@ -1,4 +1,4 @@
-@if(Auth::check() && Auth::user()->role=='teacher' || Auth::user()->role=='adminManager')
+@if(Auth::check() && Auth::user()->role=='teacher' || Auth::user()->role=='adminManager' || Auth::user()->role=='admin')
 <script>
     var userId = {{ Auth::user()->id }};
 
@@ -22,6 +22,8 @@
             close: true,
             progressBarColor: 'yellow',
         });
+
+        this.get_notifications();
     });
 </script>
 @endif

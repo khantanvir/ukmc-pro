@@ -1,15 +1,3 @@
-function get_notifications(){
-    //var badge_id = $('#select_category_id').val();
-    $.get("{{ URL::to('get-subcategory') }}/"+category_id,function(data,status){
-        if(data['result']['key']===101){
-            alert(data['result']['val']);
-        }
-        if(data['result']['key']===200){
-            console.log(data['result']['val']);
-            $('#select_subcategory_id').html(data['result']['val']);
-        }
-    });
-}
 $(function(){
     $('.user-status-chnage').change(function(){
         var active = $(this).prop('checked') == true ? 1 : 0;

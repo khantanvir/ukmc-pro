@@ -14,6 +14,8 @@ use App\Http\Controllers\User\UserController;
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('login', 'login');
+    Route::get('get-notification-count', 'get_notification_count');
+    Route::get('get-my-notification', 'get_my_notification');
 });
 Route::controller(TaskController::class)->group(function () {
     Route::get('task-create', 'create');

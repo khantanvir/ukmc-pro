@@ -226,12 +226,30 @@ class TaskController extends Controller{
             );
             return response()->json($data,200);
         }
+        $current_status = ($task->status == 0) ? "Pending" : (($task->status == 1) ? "Ongoing" : (($task->status == 2) ? "Progress" : (($task->status == 3) ? "Complete" : (($task->status == 4) ? "Cancel" : "Not Found"))));
         $status = $request->status;
         $message = ($status == 0) ? "Pending" : (($status == 1) ? "Ongoing" : (($status == 2) ? "Progress" : (($status == 3) ? "Complete" : (($status == 4) ? "Cancel" : "Not Found"))));
         $update = Task::where('id',$task->id)->update(['status'=>$status]);
+        //make instant notification
+        $url = url('task/details/'.$task->slug);
+        $notify_msg = 'Task status change from <span style="color:red;">'.$current_status.'</span> to <span style="color:green;">'.$message.'</span>';
+        event(new TaskEvent($task->assign_by,$notify_msg,$url));
+        //notification create
+        //create notification and activity
+        $notification = new Notification();
+        $notification->title = $task->task_name;
+        $notification->description = $notify_msg;
+        $notification->create_date = time();
+        $notification->create_by = Auth::user()->id;
+        $notification->creator_name = Auth::user()->name;
+        $notification->creator_image = Auth::user()->photo;
+        $notification->user_id = $task->assign_by;
+        $notification->slug = $task->slug;
+        $notification->save();
+        //end notification
         $data['result'] = array(
-            'key'=>101,
-            'val'=>'Task is Now '.$message
+            'key'=>200,
+            'val'=>$notify_msg
         );
         return response()->json($data,200);
     }
