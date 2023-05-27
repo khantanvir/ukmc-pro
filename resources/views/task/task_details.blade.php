@@ -81,29 +81,43 @@
                                     </div>
                                 </div>
                             </div>
-                            @if(Auth::user()->id==$task_data->assign_to)
                             <div class="row mb-4">
+                                @if(Auth::user()->id==$task_data->assign_to)
                                 <div class="col-3">
                                     <div class="form-group mb-2"><label for="exampleFormControlInput1">Change Status*</label>
                                         <select data-id="{{ $task_data->id }}" data-action="{{ URL::to('task-status-chnage') }}" name="status" class="task-status-change form-control" onchange="task_status_change()">
                                             <option value="">--Select One--</option>
                                             @foreach ($task_status as $status)
-                                            <option {{ ($status['id']==$task_data->status)?'selected':'' }} value="{{ $status['id'] }}">{{ $status['val'] }}</option> 
+                                            <option {{ ($status['id']==$task_data->status)?'selected':'' }} value="{{ $status['id'] }}">{{ $status['val'] }}</option>
                                             @endforeach
                                         </select>
-                                        <ul>
-                                            <!---->
-                                        </ul>
                                     </div>
                                 </div>
+                                @endif
+                                <div class="col-5">
+                                    <div class="form-group mb-2"><label for="exampleFormControlInput1">Task Progress</label>
+                                        <div class="progress br-30">
+                                            @if($task_data->status==1)
+                                            <div class="progress-bar br-30 bg-danger" role="progressbar" style="width: 29.56%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            @elseif($task_data->status==2)
+                                            <div class="progress-bar br-30 bg-danger" role="progressbar" style="width: 59.56%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            @elseif($task_data->status==3)
+                                            <div class="progress-bar br-30 bg-danger" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            @else
+                                            <div class="progress-bar br-30 bg-danger" role="progressbar" style="width: {{ ($task_data->is_view==1)?'10%':'0%' }}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            @endif
+
+                                        </div>
+                                  </div>
+                                </div>
                             </div>
-                            @endif
+
                         </div>
                         <div>
                             <h5 class="mb-5">Comments <span class="comment-count">({{ (!empty($coments))?count($coments):'0' }})</span></h5>
                                     <div class="post-comments">
                                         @if(!is_null($coments) && (is_array($coments) || $coments instanceof Countable))
-                                            
+
                                         @foreach($coments as $coment)
                                         <div class="media mb-1 pb-3 primary-comment">
                                             <div class="avatar me-4">
@@ -114,10 +128,10 @@
                                                 <div class="meta-info mb-0">{{ App\Models\Task\Task::timeLeft($coment->create_date) }}</div>
                                                 <p class="media-text mt-2 mb-0">{{ $coment->coment }}</p>
                                             </div>
-                                        </div>  
+                                        </div>
                                         @endforeach
                                         @endif
-                                        
+
                                     </div>
                                     @if(Auth::user()->role=='admin' || Auth::user()->id==$task_data->assign_to)
                                     <div class="post-form mt-5">

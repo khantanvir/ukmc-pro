@@ -7,6 +7,7 @@ use App\Traits\Service;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use App\Models\Notification\Notification;
 
 class HomeController extends Controller{
     use Service;
@@ -34,10 +35,14 @@ class HomeController extends Controller{
         $data['dashboard'] = true;
         return view('dashboard/index',$data);
     }
-    
+
     public function login(){
         $data['page_title'] = 'User | Login';
         return view('authpanel/login',$data);
+    }
+    //get notification
+    public function get_notification_count(){
+
     }
 
 }

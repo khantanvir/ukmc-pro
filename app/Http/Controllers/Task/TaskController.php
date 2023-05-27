@@ -157,8 +157,8 @@ class TaskController extends Controller{
         return redirect('task-list');
     }
     public function details($slug=NULL){
-        if(!Auth::check() && Auth::user()->role != 'admin'){
-            Session::flash('error','Don,t have any permission to Create Task!');
+        if(!Auth::check()){
+            Session::flash('error','Login First Then See This Task!');
             return redirect('task-list');
         }
         $data['page_title'] = 'Task | Details';
@@ -168,10 +168,14 @@ class TaskController extends Controller{
         $data['priorities'] = Service::priority();
         $data['task_status'] = Service::task_status();
         $data['task_data'] = Task::where('slug',$slug)->first();
+        //update view
+        if(Auth::user()->id==$data['task_data']->assign_to){
+            $updateView = Task::where('id',$data['task_data']->id)->update(['is_view'=>1]);
+        }
         $data['coments'] = json_decode($data['task_data']->coments);
         return view('task/task_details',$data);
     }
-    //task comment 
+    //task comment
     public function task_commment(Request $request){
         $request->validate([
             'coment' => 'required',
@@ -212,7 +216,7 @@ class TaskController extends Controller{
             return redirect('task/details/'.$task->slug);
         }
     }
-    //status change 
+    //status change
     public function task_status_chnage(Request $request){
         $task = Task::where('id',$request->task_id)->first();
         if(!$task){
