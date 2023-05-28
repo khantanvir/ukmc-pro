@@ -65,11 +65,8 @@ class HomeController extends Controller{
                     $select .= '<div class="media-body">';
                         $select .= '<div class="data-info">';
                             $select .= '<h6 class="">'.$row->creator_name.'</h6>';
-                            $select .= '<a href="'.url("task/details/".$row->slug).'"><p>'.$row->description.'</p></a>';
+                            $select .= '<a href="'.url($row->slug).'"><p>'.$row->description.'</p></a>';
                             $select .= '<p class="">'.Service::timeLeft($row->create_date).'</p>';
-                        $select .= '</div>';
-                        $select .= '<div class="icon-status">';
-                            $select .= '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
                         $select .= '</div>';
                     $select .= '</div>';
                 $select .= '</div>';
@@ -83,6 +80,18 @@ class HomeController extends Controller{
             );
             return response()->json($data,200);
         }
+    }
+    //all my notification
+    public function get_all_my_notification(){
+        if(!Auth::check()){
+            Session::flash('error','Login First Then See Notification List!');
+            return redirect('login');
+        }
+        $data['page_title'] = 'Archive Campus | List';
+        $data['settings'] = true;
+        $data['my_notifications'] = true;
+        $data['all_data'] = Notification::where('user_id',Auth::user()->id)->orderBy('id','desc')->paginate(15);
+        return view('home/notification',$data);
     }
 
 }

@@ -78,7 +78,7 @@ class TaskController extends Controller{
         $notification->creator_name = Auth::user()->name;
         $notification->creator_image = Auth::user()->photo;
         $notification->user_id = $getAssignToUser->id;
-        $notification->slug = $task->slug;
+        $notification->slug = $url;
         $notification->save();
         Session::put('task_id',$task->id);
         Session::flash('success','Task Created Successfully!');
@@ -150,7 +150,7 @@ class TaskController extends Controller{
         $notification->creator_name = Auth::user()->name;
         $notification->creator_image = Auth::user()->photo;
         $notification->user_id = $getAssignToUser->id;
-        $notification->slug = $task->slug;
+        $notification->slug = $url;
         $notification->save();
         Session::put('task_id',$task->id);
         Session::flash('success','Task Updated Successfully!');
@@ -244,7 +244,7 @@ class TaskController extends Controller{
         $notification->creator_name = Auth::user()->name;
         $notification->creator_image = Auth::user()->photo;
         $notification->user_id = $task->assign_by;
-        $notification->slug = $task->slug;
+        $notification->slug = $url;
         $notification->save();
         //end notification
         $data['result'] = array(
