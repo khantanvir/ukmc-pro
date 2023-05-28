@@ -22,8 +22,12 @@ class SettingController extends Controller{
         $data['page_title'] = 'Company / Settings';
         $data['settings'] = true;
         $data['company_settings'] = true;
-        $data['company_data'] = CompanySetting::where('id',1)->first();
-        $data['countries'] = Service::get_company_country();
+        if(Auth::user()->role=='agent'){
+            $data['company_data'] = CompanySetting::where('company_id',Auth::user()->company_id)->first();
+        }else{
+            $data['company_data'] = CompanySetting::where('id',1)->first();
+        }
+        $data['countries'] = Service::countries();
         return view('setting/company_setting',$data);
     }
     //company setting post

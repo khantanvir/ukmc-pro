@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     @php
     if(Auth::check()){
@@ -28,15 +27,10 @@
     <link href="{{ asset('backend/layouts/vertical-dark-menu/css/light/loader.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/layouts/vertical-dark-menu/css/dark/loader.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('backend/layouts/vertical-dark-menu/loader.js') }}"></script>
-
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="{{ asset('backend/src/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/layouts/vertical-dark-menu/css/light/plugins.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/layouts/vertical-dark-menu/css/dark/plugins.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link href="{{ asset('backend/src/plugins/src/apex/apexcharts.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('backend/src/assets/css/light/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/src/assets/css/dark/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
@@ -45,9 +39,6 @@
 
     <link href="{{ asset('backend/src/assets/css/light/components/modal.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/src/assets/css/dark/components/modal.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-
-    <!--  BEGIN CUSTOM STYLE FILE  -->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/src/plugins/src/stepper/bsStepper.min.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/src/assets/css/light/scrollspyNav.css') }}" />
@@ -58,9 +49,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/src/assets/css/light/forms/switches.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css" integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="{{ asset('web/css/custom.css') }}">
-    <!--  END CUSTOM STYLE FILE  -->
-
-
 </head>
 
 <body class="layout-boxed">
@@ -72,10 +60,6 @@
             </div>
         </div>
     </div>
-    <!--  END LOADER -->
-
-    <!--  BEGIN NAVBAR  -->
-
     <div class="header-container container-xxl">
         <header class="header navbar navbar-expand-sm expand-header">
 
@@ -198,23 +182,13 @@
             </ul>
         </header>
     </div>
-    <!--  END NAVBAR  -->
-
-    <!--  BEGIN MAIN CONTAINER  -->
     <div class="main-container" id="container">
 
         <div class="overlay"></div>
         <div class="search-overlay"></div>
-
-        <!--  BEGIN SIDEBAR  -->
         <div class="sidebar-wrapper sidebar-theme">
-
             @include('sidebar/menulist')
-
         </div>
-        <!--  END SIDEBAR  -->
-
-        <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             @yield('admin')
             <!--  BEGIN FOOTER  -->
@@ -238,9 +212,6 @@
     <script src="{{ asset('backend/layouts/vertical-dark-menu/app.js') }}"></script>
     <script src="{{ asset('backend/src/plugins/src/highlight/highlight.pack.js') }}"></script>
     <script src="{{ asset('backend/src/assets/js/scrollspyNav.js') }}"></script>
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
-
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="{{ asset('backend/src/plugins/src/apex/apexcharts.min.js') }}"></script>
     <script src="{{ asset('backend/src/assets/js/dashboard/dash_1.js') }}"></script>
     <script src="{{ asset('backend/src/assets/js/dashboard/dash_2.js') }}"></script>
